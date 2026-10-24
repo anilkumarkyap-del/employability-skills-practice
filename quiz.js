@@ -78,6 +78,7 @@
         h += "<div class='res " + (a === q.a ? "ok" : "bad") + "'>" + (a === q.a ? "✔ Correct!" : "✘ Not correct.") + " &nbsp;Answer: (" + LET[q.a] + ") " + esc(q.opts[q.a]) + "</div>";
         h += "<div class='sol'>";
         h += "<div class='box key'><span class='lab'>KEY IDEA</span><div>" + q.key + "</div></div>";
+        if (P.diagrams && P.diagrams[i + 1] && window.DG) h += window.DG.render(P.diagrams[i + 1]);
         if (P.flows && P.flows[i + 1]) h += flowHtml(P.flows[i + 1]);
         h += "<ol class='steps'>" + q.steps.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ol>";
         if (q.table) h += tbl(q.table);

@@ -110,3 +110,30 @@ th{background:var(--acc)}
 .fb.g{background:var(--ok);border-color:var(--ok)}.fb.g small{color:#d6f5e2}.fb.g b{color:#fff}
 .fo{color:var(--acc);font-weight:700;font-size:.85rem;text-align:center;max-width:150px}
 @media(max-width:760px){.qcard>*:not(.qhead){margin-left:12px;margin-right:12px}.box .lab{flex-basis:72px}}
+
+/* ===== diagrams ===== */
+.dgwrap{margin:14px 0;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card);text-align:center}
+.dgwrap svg.dg{width:100%;max-width:460px;height:auto}
+.dgwrap .cap{font-size:.86rem;color:var(--mut);margin-top:4px;font-weight:600}
+svg.dg text{fill:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+svg.dg text.dg-w{fill:#fff}svg.dg text.dg-bad{fill:var(--bad)}
+.dg-line{stroke:var(--acc);stroke-width:3;fill:none}
+.dg-comp{stroke:var(--mut);stroke-width:2}
+.dg-ah{fill:var(--acc)}
+.dg-dash{stroke:var(--bad);stroke-width:2.5;stroke-dasharray:6 4;fill:none}
+.dg-dots{fill:var(--acc)}.dg-dote{fill:var(--bad)}
+.dg-face{fill:var(--bg);stroke:var(--acc);stroke-width:3}
+.dg-tick{stroke:var(--mut);stroke-width:2}
+.dg-hand{stroke-linecap:round}.dg-hand.h{stroke:var(--acc);stroke-width:6}.dg-hand.m{stroke:var(--bad);stroke-width:3.5}
+.dg-hbox{fill:var(--acc)}.dg-mbox{fill:var(--bad)}
+.dg-arc{stroke:var(--ok);stroke-width:4;fill:none}
+.dg-grid{stroke:var(--line);stroke-width:1}
+.dg-b1{fill:var(--acc)}.dg-b2{fill:var(--ok)}
+.dg-p1{fill:var(--acc)}.dg-p2{fill:var(--bad)}.dg-p3{fill:var(--mut)}
+.dg-sh{fill:var(--accbg);stroke:var(--acc);stroke-width:3}
+.dg-v{stroke-width:2.5}
+.dg-v.v0{fill:var(--accbg);stroke:var(--acc);fill-opacity:.6}
+.dg-v.v1{fill:#e8912d;fill-opacity:.25;stroke:#e8912d}
+.dg-v.v2{fill:#7b3fb0;fill-opacity:.22;stroke:#7b3fb0}
+.dg-node{fill:var(--card);stroke:var(--acc);stroke-width:2}
+.dg-node.g{fill:var(--ok);stroke:var(--ok)}

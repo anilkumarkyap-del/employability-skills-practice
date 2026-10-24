@@ -570,3 +570,32 @@ window.PAPERS["paper1"].flows = {
  59:[["Karnataka","Bengaluru"],"::",["Maharashtra","Mumbai","g"]],
  60:[["6","6³ = 216"],"::",["8","8³ = 512","g"]]
 };
+
+/* ---- Drawn diagrams (optional). Renderers live in diagrams.js ---- */
+window.PAPERS["paper1"].diagrams = {
+ 1:{t:"stack",parts:[["Rahul got",175,""],["Short",25,"bad"],["Rest of paper",300,"mut"]],cap:"Pass mark = 175 + 25 = 200 = 40% of 500"},
+ 5:{t:"stack",parts:[["Train",180,""],["Platform",270,"mut"]],cap:"Distance to cover = 180 + 270 = 450 m"},
+ 17:{t:"faces",n:6,hi:[5,6]},
+ 18:{t:"shape",k:"rect",w:24,h:20,wl:"24 m (length)",hl:"20 m (breadth)",c:"Area = 480 sq. m"},
+ 19:{t:"shape",k:"circle",r:"r = 14 cm",c:"Circumference = 2πr = 88 cm"},
+ 20:{t:"shape",k:"square",s:"12 cm",c:"Area 144 → side 12 → perimeter 48 cm"},
+ 24:{t:"path",pts:[[0,0],[0,12],[5,12]],labels:["12 km North","5 km East"],dist:"13 km (North-East)"},
+ 25:{t:"path",pts:[[0,0],[0,-6],[8,-6]],labels:["6 km South","8 km East"],dist:"10 km"},
+ 26:{t:"path",pts:[[0,0],[0,10],[25,10],[25,-20],[35,-20],[35,0]],labels:["1) 10 m N","2) 25 m E","3) 30 m S","4) 10 m E","5) 20 m N"],dist:"35 m East"},
+ 27:{t:"tree",nodes:[{id:"m",x:170,y:30,t:"Man's mother"},{id:"a",x:80,y:100,t:"Man in photo"},{id:"b",x:260,y:100,t:"His sister"},{id:"c",x:260,y:170,t:"Priya (Niece)",c:"g"}],edges:[["m","a"],["m","b"],["b","c"]],cap:"His sister is Priya's mother, so Priya is his Niece"},
+ 28:{t:"tree",nodes:[{id:"m",x:170,y:30,t:"Nicholas's mother"},{id:"n",x:170,y:100,t:"Nicholas",c:"g"},{id:"s",x:95,y:170,t:"His son"},{id:"g",x:265,y:170,t:"The girl (wife)"}],edges:[["m","n"],["n","s"],["s","g","m"]],cap:"The girl is Nicholas's daughter-in-law, so Nicholas is her Father-in-law"},
+ 29:{t:"tree",nodes:[{id:"m",x:170,y:30,t:"Sharma's mother"},{id:"s",x:80,y:100,t:"Mr. Sharma",c:"g"},{id:"l",x:260,y:100,t:"Lady (Sister)"}],edges:[["m","s"],["m","l"]],cap:"The lady is Sharma's sister, so Sharma is her Brother"},
+ 30:{t:"week",from:5,to:6,cap:"+1 day"},
+ 31:{t:"week",from:0,to:2,cap:"+2 days"},
+ 33:{t:"clock",h:3,m:30},
+ 34:{t:"clock",h:4,m:20},
+ 39:{t:"stack",parts:[["10 above",10,"mut"],["Suresh",1,""],["34 below",34,"mut"]],cap:"Rank from bottom = 34 + 1 = 35th"},
+ 44:{t:"vwomen",cap:"Correct picture: option (A)"},
+ 47:{t:"vsub",outer:"Computers",inner:"Laptops",other:"Mobile phones"},
+ 48:{t:"nest",names:["Animals","Mammals","Dogs"]},
+ 49:{t:"bars",labels:["A","B","C","D","E"],s:[{n:"Admitted",v:[800,1200,1500,1000,900]},{n:"Passed",v:[600,780,1080,800,540]}]},
+ 50:{t:"bars",labels:["A","B","C","D","E"],s:[{n:"Admitted",v:[800,1200,1500,1000,900]},{n:"Passed",v:[600,780,1080,800,540]}]},
+ 51:{t:"bars",labels:["A","B","C","D","E"],s:[{n:"Admitted",v:[800,1200,1500,1000,900]},{n:"Passed",v:[600,780,1080,800,540]}]},
+ 52:{t:"bars",labels:["A","B","C","D","E"],s:[{n:"Admitted",v:[800,1200,1500,1000,900]},{n:"Passed",v:[600,780,1080,800,540]}]},
+ 53:{t:"bars",labels:["A","B","C","D","E"],s:[{n:"Admitted",v:[800,1200,1500,1000,900]},{n:"Passed",v:[600,780,1080,800,540]}]}
+};
