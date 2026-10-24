@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.lg{max-width:380px;margin:8vh auto;padding:0 16px}
+.lg .qcard{padding:24px;border-top:4px solid var(--pri)}
+.lg h2{margin:0 0 4px}.lg p{color:var(--mut);margin:0 0 18px;font-size:.9rem}
+.lg label{display:block;font-size:.82rem;font-weight:600;margin:12px 0 4px}
+.lg input{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;font:inherit;background:var(--bg);color:var(--ink)}
+.lg input:focus{outline:none;border-color:var(--pri)}
+.lg .row{display:flex;gap:8px}.lg .row input{flex:1}
+.lg .btn{width:100%;margin-top:18px}
+#err{color:var(--bad);font-size:.88rem;min-height:1.3em;margin-top:10px}
+</style>
+</head>
+<body>
+<header class="top"><div class="inner"><h1>Employability Skills – Practice Papers</h1></div></header>
+<main class="lg">
+  <form id="f" class="qcard" autocomplete="off">
+    <h2>Login</h2>
+    <p>Use your register number as username.</p>
+    <label for="u">Username (Register number)</label>
+    <input id="u" autocapitalize="characters" autocomplete="username" required>
+    <label for="p">Password</label>
+    <div class="row"><input id="p" type="password" autocomplete="current-password" required><button type="button" id="eye" class="btn" style="width:auto;margin:0;padding:8px 12px">Show</button></div>
+    <button class="btn primary" type="submit">Login</button>
+    <div id="err"></div>
+  </form>
+</main>
+<script>window.ES_LOGIN = true;</script>
+<script src="users.js"></script>
+<script src="auth.js"></script>
+<script>
+(function () {
+  var err = document.getElementById("err");
+  function nextUrl() {
+    var n = new URLSearchParams(location.search).get("next") || "index.html";
+    return /^[a-z0-9_.-]+\.html(\?[a-z0-9_=&%.-]*)?$/i.test(n) ? n : "index.html";
+  }
+  document.getElementById("eye").onclick = function () {
+    var p = document.getElementById("p"); var s = p.type === "password";
+    p.type = s ? "text" : "password"; this.textContent = s ? "Hide" : "Show";
+  };
+  document.getElementById("f").onsubmit = function (e) {
+    e.preventDefault();
+    var lock = +localStorage.getItem("es_lock") || 0;
+    if (Date.now() < lock) { err.textContent = "Too many wrong attempts. Try again in " + Math.ceil((lock - Date.now()) / 1000) + " seconds."; return; }
+    err.textContent = "Checking…";
+    var u = document.getElementById("u").value, p = document.getElementById("p").value;
+    window.ESAuth.check(u, p).then(function (role) {
+      if (!role) {
+        var n = (+localStorage.getItem("es_fail") || 0) + 1;
+        localStorage.setItem("es_fail", n);
+        if (n >= 5) { localStorage.setItem("es_lock", Date.now() + 60000); localStorage.setItem("es_fail", 0); err.textContent = "Too many wrong attempts. Please wait 1 minute."; }
+        else err.textContent = "Wrong username or password.";
+        return;
+      }
+      localStorage.setItem("es_fail", 0);
+      return window.ESAuth.start(u, role).then(function () { location.replace(role === "admin" && nextUrl() === "index.html" ? "index.html" : nextUrl()); });
+    }).catch(function () { err.textContent = "Login needs a secure (https) page. Open the website link, not a saved file."; });
+  };
+})();
+</script>
+</body>
+</html>

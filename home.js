@@ -2,7 +2,7 @@
   var list = document.getElementById("list");
   (window.MANIFEST || []).forEach(function (p) {
     var saved = null;
-    try { saved = JSON.parse(localStorage.getItem("practice:" + p.id) || "null"); } catch (e) {}
+    try { saved = JSON.parse(localStorage.getItem("practice:" + (window.ES_USER || "") + ":" + p.id) || "null"); } catch (e) {}
     var done = saved && saved.ans ? Object.keys(saved.ans).length : 0;
     var a = document.createElement("a");
     a.className = "card";

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manage students</title>
+<link rel="stylesheet" href="style.css">
+<script>window.ES_REQUIRE = "admin";</script>
+<script src="users.js"></script>
+<script src="auth.js"></script>
+<style>
+.mg label{display:block;font-weight:600;font-size:.85rem;margin:14px 0 4px}
+.mg input,.mg textarea{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font:inherit;background:var(--bg);color:var(--ink)}
+.mg textarea{min-height:170px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem}
+.mg .hint{color:var(--mut);font-size:.82rem;margin:2px 0 0}
+.mg .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.mg ol{padding-left:20px}.mg li{margin:6px 0}
+#msg{color:var(--ok);font-weight:600;margin-top:10px}
+</style>
+</head>
+<body>
+<header class="top"><div class="inner"><a class="back" href="index.html">&larr; Home</a><h1>Manage students (Admin)</h1></div></header>
+<main class="wrap mg">
+  <div class="qcard" style="padding:18px">
+    <h2 style="margin-top:0">Create the login list</h2>
+    <p class="hint">Type everything here, press Generate, then copy the result into <b>users.js</b> on GitHub. Passwords and register numbers are stored only as scrambled codes, so nobody can read them in your repository.</p>
+
+    <label for="sp">Student password (same for all students)</label>
+    <input id="sp" placeholder="e.g. ES@2026BARKUR">
+    <label for="au">Admin username</label>
+    <input id="au" placeholder="e.g. ADMIN1993">
+    <label for="ap">Admin password</label>
+    <input id="ap" placeholder="admin password">
+    <label for="regs">Student register numbers (one per line)</label>
+    <textarea id="regs" placeholder="REG001&#10;REG002&#10;REG003"></textarea>
+    <p class="hint">Capital/small letters do not matter for register numbers. You can paste a whole column from Excel.</p>
+
+    <div class="acts">
+      <button class="btn primary" id="gen" type="button">Generate users.js</button>
+    </div>
+    <div id="msg"></div>
+
+    <label for="out">Result (copy all of this)</label>
+    <textarea id="out" readonly></textarea>
+    <div class="acts">
+      <button class="btn" id="copy" type="button">Copy</button>
+      <button class="btn" id="dl" type="button">Download users.js</button>
+    </div>
+
+    <h3>How to update on GitHub</h3>
+    <ol>
+      <li>Open your repository and click the file <b>users.js</b>.</li>
+      <li>Click the pencil (Edit) icon.</li>
+      <li>Select all, delete, paste the new text, then press <b>Commit changes</b>.</li>
+      <li>Wait a minute. New students can log in; removed students cannot.</li>
+    </ol>
+    <p class="hint">Tip: keep your register-number list saved somewhere safe. This page cannot show old numbers back, because they are stored only as codes.</p>
+  </div>
+</main>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  function H(s) { return window.ESAuth.H(s); }
+  $("gen").onclick = function () {
+    var sp = $("sp").value, au = $("au").value.trim().toUpperCase(), ap = $("ap").value;
+    var regs = $("regs").value.split(/[\r\n,;\t]+/).map(function (x) { return x.trim().toUpperCase(); }).filter(Boolean);
+    regs = regs.filter(function (v, i) { return regs.indexOf(v) === i; });
+    if (!sp || !au || !ap) { $("msg").style.color = "var(--bad)"; $("msg").textContent = "Fill the student password, admin username and admin password."; return; }
+    var salt = Array.prototype.map.call(crypto.getRandomValues(new Uint8Array(12)), function (x) { return ("0" + x.toString(16)).slice(-2); }).join("");
+    Promise.all([H(salt + "|p|" + sp), H(salt + "|u|" + au), H(salt + "|p|" + ap)].concat(regs.map(function (r) { return H(salt + "|u|" + r); }))).then(function (h) {
+      var txt = "/* LOGIN LIST – created with manage.html. Do not edit by hand; regenerate it instead. */\n" +
+        "window.AUTH = {\n  salt: \"" + salt + "\",\n  studentPass: \"" + h[0] + "\",\n  admin: { u: \"" + h[1] + "\", p: \"" + h[2] + "\" },\n  students: [\n" +
+        h.slice(3).map(function (x) { return "    \"" + x + "\""; }).join(",\n") + "\n  ]\n};\n";
+      $("out").value = txt;
+      $("msg").style.color = "var(--ok)"; $("msg").textContent = "Done: " + regs.length + " student(s). Now copy the result into users.js.";
+    });
+  };
+  $("copy").onclick = function () {
+    var o = $("out"); if (!o.value) return; o.select();
+    (navigator.clipboard ? navigator.clipboard.writeText(o.value) : Promise.resolve(document.execCommand("copy"))).then(function () { $("msg").style.color = "var(--ok)"; $("msg").textContent = "Copied."; });
+  };
+  $("dl").onclick = function () {
+    var o = $("out").value; if (!o) return;
+    var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([o], { type: "text/javascript" })); a.download = "users.js"; a.click();
+  };
+})();
+</script>
+</body>
+</html>

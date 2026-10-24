@@ -14,7 +14,7 @@
 
   function start() {
     var P = window.PAPERS[id], Q = P.questions, N = Q.length;
-    var KEY = "practice:" + id;
+    var KEY = "practice:" + (window.ES_USER || "") + ":" + id;
     var st = { ans: {}, cur: 0 };
     try { var sv = JSON.parse(localStorage.getItem(KEY) || "null"); if (sv) st = sv; } catch (e) {}
     if (st.cur >= N) st.cur = 0;
