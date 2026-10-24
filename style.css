@@ -149,3 +149,25 @@ svg.dg text.dg-tf{fill:#e07b00}svg.dg text.dg-tk{fill:#1f5f99}svg.dg text.dg-tc{
 .toolbox{margin:0 0 12px;border:1.5px solid var(--acc,#2563eb);border-radius:12px;background:var(--accbg,#eef4ff);padding:0 12px}
 .toolbox summary{cursor:pointer;font-weight:700;padding:10px 0;color:var(--acc,#2563eb)}
 .toolbox .tw{margin-bottom:12px}
+
+/* ---- Mobile / app polish ---- */
+html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+body{overscroll-behavior-y:none}
+.dgwrap svg text.dg-halo{paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round}
+.top{padding-top:env(safe-area-inset-top)}
+@media(max-width:760px){
+  body{font-size:16px}
+  .top .inner{padding:10px 12px}
+  .opt{min-height:54px;align-items:center;padding:12px}
+  .btn{min-height:46px;padding:10px 16px}
+  .qtext{font-size:1.06rem;line-height:1.5}
+  .nav{position:sticky;bottom:0;z-index:15;margin:12px -12px 0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:var(--bg);border-top:1px solid var(--line)}
+  .nav .btn{flex:1}
+  .toolbox{margin-left:12px;margin-right:12px;padding:0 8px}
+  .toolbox table{font-size:.82rem}
+  .toolbox td,.toolbox th{padding:6px 7px}
+  .tw{margin-left:0;margin-right:0}
+  td,th{font-size:.9rem}
+  .cards{grid-template-columns:1fr}
+  #es-ref{margin-bottom:calc(18px + env(safe-area-inset-bottom))!important}
+}

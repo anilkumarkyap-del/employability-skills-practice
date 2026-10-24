@@ -25,13 +25,13 @@
       s += '<line x1="' + X(a[0]) + '" y1="' + Y(a[1]) + '" x2="' + X(z[0]) + '" y2="' + Y(z[1]) + '" class="dg-dash"/>';
       var mx = (X(a[0]) + X(z[0])) / 2, my = (Y(a[1]) + Y(z[1])) / 2;
       var hor = Math.abs(X(z[0]) - X(a[0])) > Math.abs(Y(z[1]) - Y(a[1]));
-      s += hor ? T(mx, my - 7, d.dist, { b: 1, c: "dg-bad" }) : T(mx + 8, my + 4, d.dist, { b: 1, c: "dg-bad", a: "start" });
+      s += T(W - 10, H - 12, d.dist, { b: 1, s: 13, a: "end", c: "dg-bad dg-halo" });
     }
     for (var i = 0; i < P.length - 1; i++) {
       var x1 = X(P[i][0]), y1 = Y(P[i][1]), x2 = X(P[i + 1][0]), y2 = Y(P[i + 1][1]);
       s += '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" class="dg-line" marker-end="url(#' + id + ')"/>';
       var lx = (x1 + x2) / 2, ly = (y1 + y2) / 2, lab = (d.labels || [])[i] || "";
-      s += Math.abs(x2 - x1) > Math.abs(y2 - y1) ? T(lx, ly + (i % 2 ? 16 : -8), lab, { s: 11, b: 1 }) : T(lx + 14, ly + 4, lab, { s: 11, b: 1, a: "start" });
+      s += Math.abs(x2 - x1) > Math.abs(y2 - y1) ? T(lx, ly + (i % 2 ? 18 : -8), lab, { s: 12, b: 1, c: "dg-halo" }) : T(lx + 12, ly + 4, lab, { s: 12, b: 1, a: "start", c: "dg-halo" });
     }
     s += '<circle cx="' + X(a[0]) + '" cy="' + Y(a[1]) + '" r="6" class="dg-dots"/>' + T(X(a[0]), Y(a[1]) + 20, d.sl || "Start", { s: 11, b: 1 });
     s += '<circle cx="' + X(z[0]) + '" cy="' + Y(z[1]) + '" r="6" class="dg-dote"/>' + T(X(z[0]) + 9, Y(z[1]) - 9, d.el || "End", { s: 11, b: 1, a: "start" });
