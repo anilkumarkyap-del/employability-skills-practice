@@ -339,7 +339,7 @@ window.PAPERS["paper1"] = {
 },
 /* 44 */ {
   q: "Which of the following represents the best relation between Women, Sisters and others",
-  img: "img/paper1/q44.png",
+  img: "q44.png",
   opts: ["Diagram A","Diagram B","Diagram C","Diagram D"], a: 0,
   key: "Decide how each pair of groups is related: inside, overlapping or separate. Then match the diagram.",
   steps: ["Every sister is a woman and every mother is a woman, so the Sisters and Mothers circles lie <b>inside</b> the Women circle.","A woman can be both a sister and a mother, so the Sisters and Mothers circles must <b>overlap</b>.","Only diagram (A) shows both of these."],
@@ -350,7 +350,7 @@ window.PAPERS["paper1"] = {
 /* 45 */ {
   q: "By which letter, the married teachers who live in joint family are represented?",
   note0: "Directions for Q45 and Q46: Rectangle = Married people; Circle = People who live in joint family; Triangle = School teachers.",
-  img: "img/paper1/q45.png",
+  img: "q45.png",
   opts: ["R","U","U","Q"], a: 3,
   key: "“Married teachers who live in a joint family” needs ALL THREE properties, so look for the region common to the rectangle, the triangle and the circle.",
   steps: ["Read each region of the figure (see the table).","The region inside all three shapes is <b>Q</b>."],
@@ -361,7 +361,7 @@ window.PAPERS["paper1"] = {
 /* 46 */ {
   q: "By which letter, the people who live in joint family but are neither married nor teachers are represented?",
   note0: "Refer to the same figure as Question 45. (Rectangle = Married people; Circle = Joint family; Triangle = School teachers.)",
-  img: "img/paper1/q45.png",
+  img: "q45.png",
   opts: ["T","R","S","Q"], a: 0,
   key: "We need the part inside the circle only: outside the rectangle (not married) AND outside the triangle (not teachers).",
   steps: ["Regions inside the circle: T, S and Q.","S and Q are also inside the rectangle (married), so remove them. Q is also inside the triangle.","The region inside the circle only is <b>T</b>."],
@@ -426,7 +426,7 @@ window.PAPERS["paper1"] = {
 },
 /* 54 */ {
   q: "Find the mirror image of the word MARKET.",
-  img: "img/paper1/q54.png",
+  img: "q54.png",
   opts: ["TEKRAN","TEKRAM","KRAMET","MARKET with every letter flipped (see figure)"], a: 3,
   key: "In a mirror image two things happen together: the ORDER of the letters is reversed AND each letter is flipped left-to-right.",
   steps: ["Reverse the order of the letters: M-A-R-K-E-T becomes T-E-K-R-A-M.","Now flip each letter sideways. T, A and M look the same, but E, K and R turn into their reflections.","Only option (D) shows the letters flipped. (B) TEKRAM has the right order but the letters are not flipped, so it is only half the mirror change."],
@@ -435,7 +435,7 @@ window.PAPERS["paper1"] = {
 },
 /* 55 */ {
   q: "Choose the alternative that correctly represents the Water image of the question figure.",
-  img: "img/paper1/q55.png",
+  img: "q55.png",
   opts: ["Answer figure A","Answer figure B","Answer figure C","Answer figure D"], a: 0,
   key: "A water image is a reflection below the object: the figure is flipped TOP to BOTTOM. Left and right stay where they are.",
   steps: ["Look at the question figure: the beak points LEFT near the top, a diagonal runs lower-left to upper-right, a dot sits at the upper right, and the funnel base is at the BOTTOM.","Flip it top-to-bottom: the base goes to the TOP, the beak points left near the bottom, the diagonal now runs upper-left to lower-right, and the dot moves to the lower right.","Compare with the options. Only (A) matches all of these."],
@@ -444,7 +444,7 @@ window.PAPERS["paper1"] = {
 },
 /* 56 */ {
   q: "Identify the figure that completes the pattern.",
-  img: "img/paper1/q56.png",
+  img: "q56.png",
   opts: ["Figure A","Figure B","Figure C","Figure D"], a: 3,
   key: "Find the smallest repeating unit of the grid, then see what the missing block must contain.",
   steps: ["Every small rectangle in the grid has the same design: ONE straight line from the bottom-left corner to the top-right corner.","The block marked '?' is as tall as TWO small rectangles, so it must hold two stacked rectangles, each with one such rising line.","Option (D) has exactly two stacked rectangles with one rising line in each."],
@@ -453,7 +453,7 @@ window.PAPERS["paper1"] = {
 },
 /* 57 */ {
   q: "Find out the alternative figure which contains figure (M) as its part.",
-  img: "img/paper1/q57.png",
+  img: "q57.png",
   opts: ["Figure A","Figure B","Figure C","Figure D"], a: 0,
   key: "In an embedded-figure question, you must be able to trace figure (M) inside the answer figure without adding or removing lines, at the same size and direction.",
   steps: ["Look at the longest, most unusual line of (M): one long diagonal rising from the bottom-left to the top-right, with the top and bottom bars.","Option (A) has the box with the long rising diagonal from bottom-left to top-right plus the top and bottom bars, so M can be traced inside it.","In (B), (C) and (D) the diagonals are short (they stop at a middle line or form a diamond), so no full-height rising diagonal like M's exists."],

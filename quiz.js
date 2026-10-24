@@ -7,7 +7,7 @@
   if (!id) { main.innerHTML = "<p>No paper selected. <a href='index.html'>Go back</a>.</p>"; return; }
 
   var s = document.createElement("script");
-  s.src = "papers/" + id + ".js";
+  s.src = id + ".js";
   s.onload = start;
   s.onerror = function () { main.innerHTML = "<p>Paper not found. <a href='index.html'>Go back</a>.</p>"; };
   document.head.appendChild(s);
