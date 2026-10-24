@@ -99,3 +99,10 @@ window.PAPERS["m2-1"].flows = {
  9:[["TEACHER","+2 each"],"so",["CHILDREN","EJKNFTGP","g"]],
  10:[["WATER","−3 each"],"so",["FIRE","CFOB","g"]]
 };
+window.PAPERS["m2-1"].toolbox = { head:["Topic","Remember"], rows:[
+ ["Alphabet positions","A=1, B=2 ... M=13, N=14 ... Z=26"],
+ ["Reverse position","Reverse position = 27 − forward position (A=26 ... Z=1)"],
+ ["Letter shift","+1 = one place forward (A to B). −3 = three places back. After Z comes A."],
+ ["Word to number","Try the SUM of the letter positions first."],
+ ["Mixed rules","Apply one rule at a time (for example reverse first, then shift)."],
+ ["Two coded sentences","Match the common word with the common digit."]] };

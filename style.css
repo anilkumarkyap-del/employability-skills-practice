@@ -145,3 +145,7 @@ svg.dg text.dg-ok{fill:var(--ok)}
 .dg-hl{fill:var(--ok);fill-opacity:.35}
 .dg-rf{fill:none;stroke:#e07b00;stroke-width:3}.dg-rk{fill:none;stroke:#1f5f99;stroke-width:3}.dg-rc{fill:none;stroke:#7b3fb0;stroke-width:3}
 svg.dg text.dg-tf{fill:#e07b00}svg.dg text.dg-tk{fill:#1f5f99}svg.dg text.dg-tc{fill:#7b3fb0}
+
+.toolbox{margin:0 0 12px;border:1.5px solid var(--acc,#2563eb);border-radius:12px;background:var(--accbg,#eef4ff);padding:0 12px}
+.toolbox summary{cursor:pointer;font-weight:700;padding:10px 0;color:var(--acc,#2563eb)}
+.toolbox .tw{margin-bottom:12px}

@@ -102,3 +102,8 @@ window.PAPERS["m2-2"].diagrams = {
  9:{t:"path",pts:[[0,0],[0,-10],[-5,-10],[-5,0],[-15,0]],labels:["1) 10 km South","2) 5 km West","3) 10 km North","4) 10 km West"],sl:"Home",el:"End",dist:"15 km straight back (East)"},
  10:{t:"path",pts:[[0,-5],[0,0],[-5,0]],labels:["5 m (C is South of B)","5 m (A is West of B)"],sl:"C",el:"A",dist:"A from C = North-West"}
 };
+window.PAPERS["m2-2"].toolbox = { head:["Topic","Remember"], rows:[
+ ["Distance","Pythagoras: AC = √(AB² + BC²). Triples: 3-4-5, 6-8-10, 5-12-13"],
+ ["Turns","Facing North: Right = East, Left = West. Facing South: Right = West, Left = East."],
+ ["Rotation","Clockwise (CW) ADDS degrees. Anti-clockwise SUBTRACTS degrees."],
+ ["Compass angles","N 0° · NE 45° · E 90° · SE 135° · S 180° · SW 225° · W 270° · NW 315°"]] };

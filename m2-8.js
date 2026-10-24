@@ -97,3 +97,8 @@ window.PAPERS["m2-8"].diagrams = {
  7:{t:"stack",parts:[["11 in front",11,"mut"],["Ramesh",1,"bad"],["17 behind him",17,"mut"]],cap:"11 + 1 + 17 = 29 people"},
  9:{t:"stack",parts:[["15 on her left",15,"mut"],["Neha",1,"bad"],["14 on her right",14,"mut"]],cap:"15 + 1 + 14 = 30 students"}
 };
+window.PAPERS["m2-8"].toolbox = { head:["Need","Formula"], rows:[
+ ["Total people","Total = (Rank from top + Rank from bottom) − 1"],
+ ["Rank from bottom","Rank from bottom = (Total − Rank from top) + 1"],
+ ["Why − 1 ?","The person is counted in BOTH ranks, so remove him or her once."],
+ ["Height or age order","Join the clues into one chain: tallest > ... > shortest"]] };

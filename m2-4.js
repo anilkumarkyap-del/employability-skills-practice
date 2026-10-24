@@ -104,3 +104,11 @@ window.PAPERS["m2-4"].diagrams = {
  8:{t:"week",from:0,to:5,cap:"Sunday + 5 odd days = Friday"},
  10:{t:"week",from:2,to:6,cap:"Tue + 2 + 2 = Saturday"}
 };
+window.PAPERS["m2-4"].toolbox = { head:["Topic","Remember"], rows:[
+ ["Ordinary year","365 days = 52 weeks + 1 odd day"],
+ ["Leap year","366 days = 52 weeks + 2 odd days"],
+ ["Century years","Leap year only if divisible by 400 (2000 yes; 1900, 1800, 2100 no)"],
+ ["Same day","In an ordinary year, 31 December falls on the same weekday as 1 January."],
+ ["Odd days in centuries","100 years = 5 | 200 years = 3 | 300 years = 1 | 400 years = 0"],
+ ["Days of the week","0 Sunday, 1 Monday, 2 Tuesday, 3 Wednesday, 4 Thursday, 5 Friday, 6 Saturday"],
+ ["Months (odd days)","Jan 3, Feb 0 (28 days), Mar 3, Apr 2, May 3, Jun 2, Jul 3, Aug 3, Sep 2, Oct 3, Nov 2, Dec 3"]] };

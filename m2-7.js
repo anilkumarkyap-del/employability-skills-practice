@@ -99,3 +99,9 @@ window.PAPERS["m2-7"].diagrams = {
  7:{t:"ring",seats:["1","2","3","4","5","6","7","8"],hi:[0,4]},
  10:{t:"ring",seats:["S","R","T","P","Q"],hi:[0,4]}
 };
+window.PAPERS["m2-7"].toolbox = { head:["Situation","Remember"], rows:[
+ ["Facing the centre","Clockwise = LEFT. Anticlockwise = RIGHT."],
+ ["Facing away from the centre","Clockwise = RIGHT. Anticlockwise = LEFT."],
+ ["Row facing North","Left = West, Right = East"],
+ ["Row facing South","Left = East, Right = West (left and right swap)"],
+ ["Circle with N people","People between two opposite persons = (N − 2) ÷ 2"]] };

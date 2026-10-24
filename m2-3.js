@@ -102,3 +102,9 @@ window.PAPERS["m2-3"].diagrams = {
  9:{t:"tree",w:420,nodes:[{id:"pa",x:90,y:30,t:"Pankaj (father)"},{id:"ma",x:250,y:30,t:"Manjula",c:"g"},{id:"r",x:64,y:105,t:"Ranjith"},{id:"d",x:200,y:105,t:"Darshan"},{id:"n",x:350,y:105,t:"Namana (wife)"}],edges:[["pa","ma","m"],["pa","r"],["pa","d"],["d","n","m"]],cap:"Manjula is the mother of Darshan and of his brother Ranjith"},
  10:{t:"tree",nodes:[{id:"m",x:85,y:60,t:"Man (me)"},{id:"l",x:255,y:60,t:"The lady",c:"g"}],edges:[["m","l","m"]],cap:"Her husband is me, so she is my wife"}
 };
+window.PAPERS["m2-3"].toolbox = { head:["Topic","Remember"], rows:[
+ ["Sides","Paternal = father's side. Maternal = mother's side."],
+ ["Only son or daughter","\"My mother's / father's only son or daughter\" = Self (me)."],
+ ["Levels","Draw parents ABOVE, children BELOW, brothers and sisters on the SAME level."],
+ ["In-laws","Brother's or sister's husband or wife, and spouse's brother or sister = in-law."],
+ ["Order","Always start from the inside of the sentence and work outwards."]] };

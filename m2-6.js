@@ -88,3 +88,10 @@ window.PAPERS["m2-6"].flows = {
  9:[["2BCD","front"],["B3CD","second","g"],["BCD4","end"],["5BCD","front"],["B6CD","second"]],
  10:[["12"],"reverse",["21"],"+2",["23"],"reverse",["32"],"+2",["34"],"reverse",["43","","g"]]
 };
+window.PAPERS["m2-6"].toolbox = { head:["Look for","Example"], rows:[
+ ["Multiply by the same number","7, 14, 28, 56 (× 2)"],
+ ["Differences that grow","3, 5, 9, 17 (differences 2, 4, 8)"],
+ ["Prime numbers","2, 3, 5, 7, 11, 13"],
+ ["Squares and cubes","4, 9, 16, 25 (squares) | 1, 8, 27, 64 (cubes)"],
+ ["Letters","Turn letters into positions (A=1 ... Z=26) and look at the gaps"],
+ ["Odd one out","Check every term against the pattern"]] };

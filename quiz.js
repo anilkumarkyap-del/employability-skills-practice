@@ -62,6 +62,7 @@
       main.className = "wrap q s" + (secIndex(i + 1) % 5);
       var h = "<div class='sec'>" + esc(sectionOf(i + 1)) + "</div>";
       h += "<div class='qcard'><div class='qhead'><span class='qno'>Q" + (i + 1) + "</span><span class='of'>of " + N + "</span></div>";
+      if (P.toolbox) h += "<details class='toolbox'" + (i === 0 ? " open" : "") + "><summary>&#129520; Toolbox: remember these first</summary>" + tbl(P.toolbox) + "</details>";
       if (q.note0) h += "<p class='dir'>" + q.note0 + "</p>";
       h += "<p class='qtext'>" + q.q + "</p>";
       if (q.data) h += tbl(q.data);

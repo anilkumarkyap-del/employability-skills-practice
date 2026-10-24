@@ -102,3 +102,8 @@ window.PAPERS["m2-5"].diagrams = {
  9:{t:"stack",parts:[["3 hours = 90°",90,"mut"],["20 min = 10°",10,"bad"]],cap:"90° + 10° = 100°"},
  10:{t:"stack",parts:[["Coincide",22,"mut"],["Opposite",22,""]],cap:"22 + 22 = 44 times a day"}
 };
+window.PAPERS["m2-5"].toolbox = { head:["Topic","Remember"], rows:[
+ ["Speeds","Minute hand: 6° per minute. Hour hand: 0.5° per minute (30° per hour). Relative speed: 5.5° per minute."],
+ ["Angle","Angle = |30 × H − 5.5 × M| (H = hour, M = minutes)"],
+ ["Reflex angle","Reflex angle = 360° − the angle between the hands"],
+ ["In 24 hours","Hands coincide (0°): 22 times | Right angles (90°): 44 times | Opposite (180°): 22 times"]] };
