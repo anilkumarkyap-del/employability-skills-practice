@@ -23,6 +23,18 @@
 
     function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
     function esc(t) { var d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+    function secIndex(n) {
+      for (var i = 0; i < (P.sections || []).length; i++) if (n >= P.sections[i].from && n <= P.sections[i].to) return i;
+      return 0;
+    }
+    function flowHtml(f) {
+      return "<div class='flow'>" + f.map(function (x) {
+        if (typeof x === "string") return "<span class='fo'>" + x + "</span>";
+        var lab = x[0], val = x[1], g = x[2] === "g" ? " g" : "";
+        if (!val) return "<div class='fb" + g + "'><b>" + lab + "</b></div>";
+        return "<div class='fb" + g + "'><small>" + lab + "</small><b>" + val + "</b></div>";
+      }).join("") + "</div>";
+    }
     function sectionOf(n) {
       for (var i = 0; i < (P.sections || []).length; i++) if (n >= P.sections[i].from && n <= P.sections[i].to) return P.sections[i].name;
       return "";
@@ -47,6 +59,7 @@
 
     function render() {
       var i = st.cur, q = Q[i], a = st.ans[i], answered = a !== undefined;
+      main.className = "wrap q s" + (secIndex(i + 1) % 5);
       var h = "<div class='sec'>" + esc(sectionOf(i + 1)) + "</div>";
       h += "<div class='qcard'><div class='qhead'><span class='qno'>Q" + (i + 1) + "</span><span class='of'>of " + N + "</span></div>";
       if (q.note0) h += "<p class='dir'>" + q.note0 + "</p>";
@@ -62,9 +75,10 @@
       h += "</div>";
 
       if (answered) {
-        h += "<div class='res " + (a === q.a ? "ok" : "bad") + "'>" + (a === q.a ? "✔ Correct!" : "✘ Not correct.") + " Answer: (" + LET[q.a] + ") " + esc(q.opts[q.a]) + "</div>";
+        h += "<div class='res " + (a === q.a ? "ok" : "bad") + "'>" + (a === q.a ? "✔ Correct!" : "✘ Not correct.") + " &nbsp;Answer: (" + LET[q.a] + ") " + esc(q.opts[q.a]) + "</div>";
         h += "<div class='sol'>";
         h += "<div class='box key'><span class='lab'>KEY IDEA</span><div>" + q.key + "</div></div>";
+        if (P.flows && P.flows[i + 1]) h += flowHtml(P.flows[i + 1]);
         h += "<ol class='steps'>" + q.steps.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ol>";
         if (q.table) h += tbl(q.table);
         if (q.tip) h += "<div class='box tip'><span class='lab'>TIP</span><div>" + q.tip + "</div></div>";

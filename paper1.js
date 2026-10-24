@@ -520,3 +520,53 @@ window.PAPERS["paper1"] = {
 }
   ]
 };
+
+/* ---- Small calculation diagrams shown inside the solution (optional) ----
+   Item = [label, value, "g"]  -> box ("g" = green final answer)
+   Item = "text"               -> operator / arrow between boxes            */
+window.PAPERS["paper1"].flows = {
+ 1:[["Rahul got","175"],"+",["Short by","25"],"=",["Pass mark","200"],"÷ 40% →",["Maximum marks","500","g"]],
+ 2:[["Buy","45,000"],"+",["Transport","3,000"],"=",["Real cost","48,000"],"sold at 52,800 →",["Profit %","10%","g"]],
+ 3:[["Marked","80,000"],"× 0.85",["After 15% off","68,000"],"× 0.90",["After 10% off","61,200","g"]],
+ 4:[["A : B","35,000 : 45,000"],"÷ 5,000 →",["Profit ratio","7 : 9","g"]],
+ 5:[["Train","180 m"],"+",["Platform","270 m"],"=",["Distance","450 m"],"÷ 15 m/s →",["Time","30 s","g"]],
+ 6:[["Downstream 12 km/h","3 h"],"+",["Upstream 6 km/h","6 h"],"=",["Total time","9 hours","g"]],
+ 7:[["Going","2 h"],"+",["Return","3 h"],"=",["Total","5 h"],"240 ÷ 5 →",["Average speed","48 km/h","g"]],
+ 8:[["SI","360"],"÷ 0.12 (6% × 2 yr) →",["Principal","Rs.3,000","g"]],
+ 9:[["Simple interest","200"],"vs",["Compound interest","210"],"→ difference",["Difference","Rs.10","g"]],
+ 10:[["Sum 60, diff 6","33 & 27"],"→",["Ratio","11 : 9","g"]],
+ 11:[["Total of 5","1,20,000"],"− 40,000 =",["Total of 4","80,000"],"÷ 4 →",["New average","20,000","g"]],
+ 12:[["Numbers","3x : 4x"],"add 2 →",["Solve","x = 4"],"→",["Numbers","12 & 16","g"]],
+ 13:[["Ages","4x : 5x"],"+6 →",["Solve","x = 6"],"→",["Anand (4x)","24 years","g"]],
+ 14:[["Choices","5×4×3×2×1"],"=",["Arrangements","120","g"]],
+ 15:[["3 men of 7","35"],"×",["2 women of 4","6"],"=",["Committees","210","g"]],
+ 17:[["Favourable (5, 6)","2"],"÷",["Total","6"],"=",["Probability","1/3","g"]],
+ 18:[["Perimeter 88","l + b = 44"],"l − b = 4 →",["Length, Breadth","24, 20"],"→",["Area","480 sq. m","g"]],
+ 19:[["Formula","2πr"],"= 2 × 22/7 × 14 →",["Circumference","88 cm","g"]],
+ 20:[["Area","144"],"√",["Side","12 cm"],"× 4",["Perimeter","48 cm","g"]],
+ 21:[["DELHI → EFMIJ","+1 each letter"],"so",["MUMBAI","NVNCBJ","g"]],
+ 22:[["TR AI NS","RT IA SN"],"::",["FL OW ER","LF WO RE","g"]],
+ 23:[["A P P L E","1 16 16 12 5"],"→",["Code","11616125","g"]],
+ 24:[["North","12 km"],"+",["East","5 km"],"→ √169 →",["Distance","13 km N-E","g"]],
+ 25:[["South","6 km"],"+",["East","8 km"],"→ √100 →",["Distance","10 km","g"]],
+ 27:[["Man's sister","= Priya's mother"],"→",["Priya is his","Niece","g"]],
+ 28:[["Nicholas's son","= grandson of mother"],"→ girl is his daughter-in-law →",["Nicholas is","Father-in-law","g"]],
+ 29:[["Lady","= Sharma's sister"],"→",["Sharma is her","Brother","g"]],
+ 30:[["12 Jan 2018","Friday"],"+1 day (365 = 52 weeks + 1)",["12 Jan 2019","Saturday","g"]],
+ 31:[["Today","Sunday"],"+2 days (65 = 9 weeks + 2)",["After 65 days","Tuesday","g"]],
+ 33:[["Hour hand","105°"],"vs",["Minute hand","180°"],"→",["Angle","75°","g"]],
+ 34:[["Hour hand","130°"],"vs",["Minute hand","120°"],"→",["Angle","10°","g"]],
+ 35:[["4"],"+2",["6"],"+3",["9"],"+4",["13"],"+5",["18"],"+6",["24","","g"]],
+ 36:[["H","8"],"+4",["L","12"],"+4",["P","16"],"+4",["T","20"],"+4",["X","24","g"]],
+ 37:["LEFT",["M"],["R"],["N"],["O","","g"],["P"],"RIGHT"],
+ 38:["LEFT",["Bindia"],["Sushma"],["Raksha"],["Tina"],["Meena","","g"],"RIGHT"],
+ 39:[["Above him","10"],"+",["Suresh","1"],"+",["Below him","34"],"→",["Rank from bottom","35th","g"]],
+ 40:[["Total now","80"],"− 3 people × 3 yrs =",["3 years ago","71","g"]],
+ 50:[["C passed","1,080"],":",["E failed","360"],"÷ 360 →",["Ratio","3 : 1","g"]],
+ 51:[["Total passed","3,800"],"÷ 5 colleges →",["Average","760","g"]],
+ 52:[["C passed","1,080"],"−",["B passed","780"],"=",["Difference","300","g"]],
+ 53:[["D − A","200"],"÷ 600 × 100 →",["% more","33 1/3 %","g"]],
+ 58:[["Person really stands on","Floor"],"is called →",["Answer","Roof","g"]],
+ 59:[["Karnataka","Bengaluru"],"::",["Maharashtra","Mumbai","g"]],
+ 60:[["6","6³ = 216"],"::",["8","8³ = 512","g"]]
+};
