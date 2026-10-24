@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="inner">
+    <a class="back" href="index.html">&larr; All papers</a>
+    <h1 id="ptitle">Loading…</h1>
+    <button id="palbtn" class="ghost" type="button">Questions</button>
+  </div>
+</header>
+<div class="layout">
+  <aside id="pal" class="pal">
+    <div class="pal-head"><b>Questions</b><span id="score"></span></div>
+    <div id="palgrid" class="palgrid"></div>
+    <div class="legend"><i class="ok"></i>Correct <i class="bad"></i>Wrong <i class="cur"></i>Current</div>
+    <button id="reset" class="ghost small" type="button">Reset this paper</button>
+  </aside>
+  <main id="main" class="wrap q"></main>
+</div>
+<script src="js/quiz.js"></script>
+</body>
+</html>
