@@ -47,7 +47,15 @@
     document.addEventListener("DOMContentLoaded", addBox);
     if (document.readyState !== "loading") addBox();
   }
+  function addRef() {
+    if (document.getElementById("es-ref")) return;
+    var f = document.createElement("footer"); f.id = "es-ref";
+    f.style.cssText = "max-width:900px;margin:28px auto 18px;padding:12px 16px;border-top:1px solid #cbd5e1;font-size:.78rem;line-height:1.5;color:#64748b;text-align:center";
+    f.innerHTML = "<b>Source:</b> Manohar, B., &amp; Nagaraja. (2026). <i>Employability skills: As per Mangalore University SEP \u2013 B.Com V Semester syllabus</i> (1st ed.). Professional Books Publisher.";
+    document.body.appendChild(f);
+  }
   function addBox() {
+    addRef();
     if (document.getElementById("es-box")) return;
     var host = document.querySelector(".top .inner"); if (!host) return;
     var st = document.createElement("style");
