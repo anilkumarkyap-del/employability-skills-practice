@@ -137,3 +137,11 @@ svg.dg text.dg-w{fill:#fff}svg.dg text.dg-bad{fill:var(--bad)}
 .dg-v.v2{fill:#7b3fb0;fill-opacity:.22;stroke:#7b3fb0}
 .dg-node{fill:var(--card);stroke:var(--acc);stroke-width:2}
 .dg-node.g{fill:var(--ok);stroke:var(--ok)}
+
+.dg-arr{stroke-width:4;fill:none}.dg-a1{stroke:var(--mut)}.dg-a2{stroke:var(--acc)}.dg-a3{stroke:var(--ok)}
+.dg-a1f{fill:var(--mut)}.dg-a2f{fill:var(--acc)}.dg-a3f{fill:var(--ok)}
+.dg-hi{fill:var(--okbg);stroke:var(--ok);stroke-width:3}
+svg.dg text.dg-ok{fill:var(--ok)}
+.dg-hl{fill:var(--ok);fill-opacity:.35}
+.dg-rf{fill:none;stroke:#e07b00;stroke-width:3}.dg-rk{fill:none;stroke:#1f5f99;stroke-width:3}.dg-rc{fill:none;stroke:#7b3fb0;stroke-width:3}
+svg.dg text.dg-tf{fill:#e07b00}svg.dg text.dg-tk{fill:#1f5f99}svg.dg text.dg-tc{fill:#7b3fb0}

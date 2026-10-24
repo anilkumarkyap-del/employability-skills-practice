@@ -31,10 +31,10 @@
       var x1 = X(P[i][0]), y1 = Y(P[i][1]), x2 = X(P[i + 1][0]), y2 = Y(P[i + 1][1]);
       s += '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" class="dg-line" marker-end="url(#' + id + ')"/>';
       var lx = (x1 + x2) / 2, ly = (y1 + y2) / 2, lab = (d.labels || [])[i] || "";
-      s += Math.abs(x2 - x1) > Math.abs(y2 - y1) ? T(lx, ly + (i % 2 ? 16 : -8), lab, { s: 11, b: 1 }) : T(lx + 8, ly + 4, lab, { s: 11, b: 1, a: "start" });
+      s += Math.abs(x2 - x1) > Math.abs(y2 - y1) ? T(lx, ly + (i % 2 ? 16 : -8), lab, { s: 11, b: 1 }) : T(lx + 14, ly + 4, lab, { s: 11, b: 1, a: "start" });
     }
-    s += '<circle cx="' + X(a[0]) + '" cy="' + Y(a[1]) + '" r="6" class="dg-dots"/>' + T(X(a[0]), Y(a[1]) + 20, "Start", { s: 11, b: 1 });
-    s += '<circle cx="' + X(z[0]) + '" cy="' + Y(z[1]) + '" r="6" class="dg-dote"/>' + T(X(z[0]) + 9, Y(z[1]) - 9, "End", { s: 11, b: 1, a: "start" });
+    s += '<circle cx="' + X(a[0]) + '" cy="' + Y(a[1]) + '" r="6" class="dg-dots"/>' + T(X(a[0]), Y(a[1]) + 20, d.sl || "Start", { s: 11, b: 1 });
+    s += '<circle cx="' + X(z[0]) + '" cy="' + Y(z[1]) + '" r="6" class="dg-dote"/>' + T(X(z[0]) + 9, Y(z[1]) - 9, d.el || "End", { s: 11, b: 1, a: "start" });
     return svg(W, H, s);
   }
 
@@ -63,7 +63,7 @@
   function bars(d) {
     var W = 380, H = 230, L = 36, B = 32, n = d.labels.length, ns = d.s.length;
     var mx = 0; d.s.forEach(function (q) { q.v.forEach(function (v) { if (v > mx) mx = v; }); });
-    var top = Math.ceil(mx / 500) * 500, gw = (W - L - 10) / n, bw = Math.min(26, gw / (ns + 1)), s = "";
+    var top = d.top || Math.ceil(mx / 500) * 500, gw = (W - L - 10) / n, bw = Math.min(26, gw / (ns + 1)), s = "";
     for (var g = 0; g <= 4; g++) {
       var yy = 20 + (H - B - 20) * (1 - g / 4);
       s += '<line x1="' + L + '" y1="' + yy + '" x2="' + (W - 6) + '" y2="' + yy + '" class="dg-grid"/>' + T(L - 4, yy + 4, Math.round(top * g / 4), { a: "end", s: 9 });
@@ -74,7 +74,7 @@
         var hh = (H - B - 20) * q.v[i] / top, x = gx + j * bw, y = H - B - hh;
         s += '<rect x="' + x + '" y="' + y + '" width="' + (bw - 2) + '" height="' + hh + '" class="dg-b' + (j + 1) + '"/>' + T(x + bw / 2 - 1, y - 3, q.v[i], { s: 8 });
       });
-      s += T(L + i * gw + gw / 2, H - B + 16, "College " + lb, { s: 10 });
+      s += T(L + i * gw + gw / 2, H - B + 16, (d.pre || "College ") + lb, { s: 10 });
     });
     d.s.forEach(function (q, j) { s += '<rect x="' + (L + 10 + j * 90) + '" y="4" width="12" height="8" class="dg-b' + (j + 1) + '"/>' + T(L + 26 + j * 90, 12, q.n, { a: "start", s: 10 }); });
     return svg(W, H, s);
@@ -171,10 +171,92 @@
     d.nodes.forEach(function (n) {
       s += '<rect x="' + (n.x - w / 2) + '" y="' + (n.y - h / 2) + '" width="' + w + '" height="' + h + '" rx="8" class="' + (n.c === "g" ? "dg-node g" : "dg-node") + '"/>' + T(n.x, n.y + 4, n.t, { s: 11, b: 1, c: n.c === "g" ? "dg-w" : "" });
     });
-    return svg(340, maxy + 30, s);
+    return svg(d.w || 340, maxy + 30, s);
   }
 
-  var R = { path: path, clock: clock, bars: bars, stack: stack, shape: shape, nest: nest, vsub: vsub, vwomen: vwomen, faces: faces, week: week, tree: tree };
+
+  function compass(d) {
+    var id = "cp" + (++uid), cx = 130, cy = 120, r = 92, s = "";
+    var N = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"], cl = ["dg-a1", "dg-a2", "dg-a3"];
+    s += "<defs>" + cl.map(function (c, i) { return '<marker id="' + id + i + '" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="' + c + 'f"/></marker>'; }).join("") + "</defs>";
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" class="dg-face"/>';
+    N.forEach(function (n, i) { var a = i * Math.PI / 4; s += T(cx + (r + 14) * Math.sin(a), cy - (r + 14) * Math.cos(a) + 4, n, { b: 1, s: 11 }); });
+    d.arrows.forEach(function (ar, i) {
+      var a = ar.deg * Math.PI / 180, L = 78 - i * 6, k = Math.min(i, 2);
+      s += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + L * Math.sin(a)) + '" y2="' + (cy - L * Math.cos(a)) + '" class="dg-arr ' + cl[k] + '" marker-end="url(#' + id + k + ')"/>';
+      s += '<rect x="262" y="' + (70 + i * 26) + '" width="14" height="6" class="' + cl[k] + 'f"/>' + T(282, 77 + i * 26, ar.l, { a: "start", s: 11 });
+    });
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="4" class="dg-dots"/>';
+    return svg(460, 250, s);
+  }
+
+  function circles(d) {
+    var s = "";
+    d.items.forEach(function (c) {
+      s += '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + c.r + '" class="dg-v v' + (c.v || 0) + '"' + (c.dash ? ' style="stroke-dasharray:6 4"' : "") + "/>" + T(c.lx, c.ly, c.l, { b: 1, s: c.s || 12 });
+    });
+    (d.notes || []).forEach(function (n, i) { s += T(190, (d.H || 226) - 16 + i * 13, n, { s: 10 }); });
+    return svg(380, d.H || 226, s);
+  }
+
+  function face(cx, cy, r, h, m, title) {
+    var s = '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" class="dg-face"/>';
+    for (var k = 1; k <= 12; k++) {
+      var a = k * Math.PI / 6;
+      s += '<line x1="' + (cx + (r - 6) * Math.sin(a)) + '" y1="' + (cy - (r - 6) * Math.cos(a)) + '" x2="' + (cx + r * Math.sin(a)) + '" y2="' + (cy - r * Math.cos(a)) + '" class="dg-tick"/>';
+      if (k % 3 === 0) s += T(cx + (r - 16) * Math.sin(a), cy - (r - 16) * Math.cos(a) + 4, k, { s: 10 });
+    }
+    var ah = (h % 12) * 30 + m * 0.5, am = m * 6;
+    function pt(L, g) { var q = g * Math.PI / 180; return [cx + L * Math.sin(q), cy - L * Math.cos(q)]; }
+    var p = pt(r * 0.5, ah), q = pt(r * 0.78, am);
+    s += '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0] + '" y2="' + p[1] + '" class="dg-hand h"/><line x1="' + cx + '" y1="' + cy + '" x2="' + q[0] + '" y2="' + q[1] + '" class="dg-hand m"/><circle cx="' + cx + '" cy="' + cy + '" r="3" class="dg-dots"/>';
+    return s + T(cx, cy + r + 18, title, { b: 1, s: 11 });
+  }
+  function clockpair(d) {
+    var s = face(105, 90, 72, d.a[0], d.a[1], d.a[2]) + face(305, 90, 72, d.b[0], d.b[1], d.b[2]);
+    s += '<path d="M185 90 H225" class="dg-line" style="marker-end:none"/>' + T(205, 80, d.mid || "→", { b: 1, s: 12, c: "dg-bad" });
+    return svg(410, 200, s);
+  }
+
+  function ring(d) {
+    var n = d.seats.length, cx = 150, cy = 112, R = 78, s = '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" class="dg-face"/>' + T(cx, cy + 4, "centre", { s: 11 });
+    d.seats.forEach(function (nm, i) {
+      var a = i * 2 * Math.PI / n, x = cx + R * Math.sin(a), y = cy - R * Math.cos(a), on = d.hi && d.hi.indexOf(i) >= 0;
+      var ix = cx + (R - 36) * Math.sin(a), iy = cy - (R - 36) * Math.cos(a);
+      s += '<line x1="' + (cx + (R - 22) * Math.sin(a)) + '" y1="' + (cy - (R - 22) * Math.cos(a)) + '" x2="' + ix + '" y2="' + iy + '" class="dg-comp"/>';
+      s += '<circle cx="' + x + '" cy="' + y + '" r="19" class="' + (on ? "dg-node g" : "dg-node") + '"/>' + T(x, y + 5, nm, { b: 1, s: 15, c: on ? "dg-w" : "" });
+    });
+    s += T(300, 70, "Facing the centre:", { a: "start", b: 1, s: 11 }) + T(300, 90, "Left = clockwise side", { a: "start", s: 11 }) + T(300, 108, "Right = anticlockwise side", { a: "start", s: 11 });
+    return svg(470, 214, s);
+  }
+
+  function panel(kind, i, hi) {
+    var x0 = 12 + i * 98, cx = x0 + 45, cy = 52, s = "", c = "dg-v v0";
+    if (kind === "sep") { s = '<circle cx="' + cx + '" cy="' + cy + '" r="42" class="' + c + '"/><circle cx="' + (cx - 14) + '" cy="' + cy + '" r="11" class="dg-v v1"/><circle cx="' + (cx + 14) + '" cy="' + cy + '" r="11" class="dg-v v2"/>'; }
+    if (kind === "tri") { s = '<circle cx="' + (cx - 11) + '" cy="' + (cy - 11) + '" r="22" class="dg-v v0"/><circle cx="' + (cx + 11) + '" cy="' + (cy - 11) + '" r="22" class="dg-v v1"/><circle cx="' + cx + '" cy="' + (cy + 11) + '" r="22" class="dg-v v2"/>'; }
+    if (kind === "nest") { s = '<circle cx="' + cx + '" cy="' + cy + '" r="42" class="dg-v v0"/><circle cx="' + cx + '" cy="' + (cy + 8) + '" r="28" class="dg-v v1"/><circle cx="' + cx + '" cy="' + (cy + 15) + '" r="14" class="dg-v v2"/>'; }
+    if (kind === "row") { s = '<circle cx="' + (cx - 30) + '" cy="' + cy + '" r="13" class="dg-v v0"/><circle cx="' + cx + '" cy="' + cy + '" r="13" class="dg-v v1"/><circle cx="' + (cx + 30) + '" cy="' + cy + '" r="13" class="dg-v v2"/>'; }
+    if (kind === "ov") { s = '<circle cx="' + cx + '" cy="' + cy + '" r="42" class="' + c + '"/><circle cx="' + (cx - 11) + '" cy="' + cy + '" r="17" class="dg-v v1"/><circle cx="' + (cx + 11) + '" cy="' + cy + '" r="17" class="dg-v v2"/>'; }
+    var f = hi ? '<rect x="' + (x0 - 2) + '" y="4" width="94" height="124" rx="10" class="dg-hi"/>' : "";
+    return f + s + T(cx, 118, "(" + "ABCD"[i] + ")", { b: 1, s: 13, c: hi ? "dg-ok" : "" });
+  }
+  function vopts(d) {
+    var s = ""; d.kinds.forEach(function (k, i) { s += panel(k, i, d.hi === i); });
+    return svg(400, 132, s);
+  }
+
+  function kab(d) {
+    var s = "", hl = d.hi;
+    if (hl) s += '<rect x="352" y="470" width="108" height="31" class="dg-hl"/>';
+    s += '<rect x="108" y="385" width="352" height="207" class="dg-rf"/><rect x="272" y="343" width="356" height="158" class="dg-rk"/><rect x="352" y="470" width="357" height="202" class="dg-rc"/>';
+    [["P", 187, 414], ["Q", 371, 426], ["R", 547, 426], ["S", 405, 490], ["T", 519, 490], ["U", 669, 510], ["V", 405, 545]].forEach(function (l) {
+      s += T(l[1], l[2], l[0], { b: 1, s: 17, c: hl && l[0] === "S" ? "dg-ok" : "" });
+    });
+    s += T(448, 361, "Kabaddi", { b: 1, s: 14, c: "dg-tk" }) + T(203, 573, "Football", { b: 1, s: 14, c: "dg-tf" }) + T(582, 655, "Cricket", { b: 1, s: 14, c: "dg-tc" });
+    return '<svg class="dg" viewBox="95 330 630 355" xmlns="http://www.w3.org/2000/svg">' + s + "</svg>";
+  }
+
+  var R = { compass: compass, circles: circles, clockpair: clockpair, ring: ring, vopts: vopts, kab: kab, path: path, clock: clock, bars: bars, stack: stack, shape: shape, nest: nest, vsub: vsub, vwomen: vwomen, faces: faces, week: week, tree: tree };
   window.DG = {
     render: function (d) {
       var f = R[d.t]; if (!f) return "";

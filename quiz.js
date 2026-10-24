@@ -65,6 +65,7 @@
       if (q.note0) h += "<p class='dir'>" + q.note0 + "</p>";
       h += "<p class='qtext'>" + q.q + "</p>";
       if (q.data) h += tbl(q.data);
+      if (q.fig && window.DG) h += window.DG.render(q.fig);
       if (q.img) h += "<img class='fig' src='" + q.img + "' alt='Figure for question " + (i + 1) + "'>";
       h += "<div class='opts'>";
       q.opts.forEach(function (o, k) {
