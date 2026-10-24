@@ -11,17 +11,35 @@
   function hu(u) { return H(A.salt + "|u|" + String(u).trim().toUpperCase()); }
   function hp(p) { return H(A.salt + "|p|" + p); }
 
+  function nameKey(u, p) {
+    var e = new TextEncoder();
+    return crypto.subtle.importKey("raw", e.encode(p), "PBKDF2", false, ["deriveKey"]).then(function (k) {
+      return crypto.subtle.deriveKey({ name: "PBKDF2", salt: e.encode(A.salt + "|n|" + String(u).trim().toUpperCase()), iterations: 100000, hash: "SHA-256" }, k, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+    });
+  }
+  function getName(u, p, h) {         // -> Promise<string> ("" if none)
+    var blob = A.names && A.names[h];
+    if (!blob) return Promise.resolve("");
+    return nameKey(u, p).then(function (key) {
+      var raw = Uint8Array.from(atob(blob), function (c) { return c.charCodeAt(0); });
+      return crypto.subtle.decrypt({ name: "AES-GCM", iv: raw.slice(0, 12) }, key, raw.slice(12));
+    }).then(function (b) { return new TextDecoder().decode(b); }).catch(function () { return ""; });
+  }
+  var pendingName = "";
   function check(u, p) {            // -> Promise<"admin" | "student" | null>
+    pendingName = "";
     return Promise.all([hu(u), hp(p)]).then(function (r) {
       if (A.admin && r[0] === A.admin.u && r[1] === A.admin.p) return "admin";
-      if (A.students && A.students.indexOf(r[0]) >= 0 && r[1] === A.studentPass) return "student";
+      if (A.students && A.students.indexOf(r[0]) >= 0 && r[1] === A.studentPass) {
+        return getName(u, p, r[0]).then(function (n) { pendingName = n; return "student"; });
+      }
       return null;
     });
   }
   function start(u, role) {
     var t = Date.now(), name = String(u).trim().toUpperCase();
     return H(A.salt + "|s|" + role + "|" + name + "|" + t).then(function (k) {
-      sessionStorage.setItem("es_session", JSON.stringify({ u: name, r: role, t: t, k: k }));
+      sessionStorage.setItem("es_session", JSON.stringify({ u: name, r: role, t: t, k: k, n: role === "student" ? pendingName : "" }));
     });
   }
   function logout() { try { sessionStorage.removeItem("es_session"); } catch (e) {} location.replace("login.html"); }
@@ -67,6 +85,15 @@
     if (sess.r === "admin") { var m = document.createElement("a"); m.href = "manage.html"; m.textContent = "Manage"; b.appendChild(m); }
     var x = document.createElement("button"); x.type = "button"; x.textContent = "Logout"; x.onclick = logout; b.appendChild(x);
     host.appendChild(b);
+    var bar = document.getElementById("es-who");
+    if (!bar && sess.n) {
+      bar = document.createElement("div"); bar.id = "es-who";
+      bar.style.cssText = "padding:7px 16px;font-size:.85rem;background:var(--card,#fff);border-bottom:1px solid var(--line,#dbe3ea);color:var(--ink,#111)";
+      var hd = document.querySelector("header.top"); if (hd && hd.parentNode) hd.parentNode.insertBefore(bar, hd.nextSibling);
+      bar.innerHTML = "\u{1F464} <b></b> <span style='color:var(--mut,#64748b)'></span>";
+      bar.querySelector("b").textContent = sess.n;
+      bar.querySelector("span").textContent = "(" + sess.u + ")";
+    }
   }
 
   if (!sess || !sess.k || Date.now() - sess.t > 12 * 3600 * 1000) return deny();

@@ -24,7 +24,7 @@
 <main class="wrap mg">
   <div class="qcard" style="padding:18px">
     <h2 style="margin-top:0">Create the login list</h2>
-    <p class="hint">Type everything here, press Generate, then copy the result into <b>users.js</b> on GitHub. Passwords and register numbers are stored only as scrambled codes, so nobody can read them in your repository.</p>
+    <p class="hint">Type everything here, press Generate, then copy the result into <b>users.js</b> on GitHub. Passwords, register numbers and names are stored only as scrambled codes, so nobody can read them in your repository.</p>
 
     <label for="sp">Student password (same for all students)</label>
     <input id="sp" placeholder="e.g. ES@2026BARKUR">
@@ -32,9 +32,9 @@
     <input id="au" placeholder="e.g. ADMIN1993">
     <label for="ap">Admin password</label>
     <input id="ap" placeholder="admin password">
-    <label for="regs">Student register numbers (one per line)</label>
-    <textarea id="regs" placeholder="REG001&#10;REG002&#10;REG003"></textarea>
-    <p class="hint">Capital/small letters do not matter for register numbers. You can paste a whole column from Excel.</p>
+    <label for="regs">Students: register number and name (one student per line)</label>
+    <textarea id="regs" placeholder="U05RN24C0001 Deeksha&#10;U05RN24C0006 Sneha Hari Gowda&#10;U05RN24C0007 | Disha"></textarea>
+    <p class="hint">Write the register number first, then a space (or | or comma) and the name. The name is optional. Capital/small letters do not matter for register numbers. Names are stored scrambled, and appear only after a student logs in.</p>
 
     <div class="acts">
       <button class="btn primary" id="gen" type="button">Generate users.js</button>
@@ -64,14 +64,32 @@
   function H(s) { return window.ESAuth.H(s); }
   $("gen").onclick = function () {
     var sp = $("sp").value, au = $("au").value.trim().toUpperCase(), ap = $("ap").value;
-    var regs = $("regs").value.split(/[\r\n,;\t]+/).map(function (x) { return x.trim().toUpperCase(); }).filter(Boolean);
-    regs = regs.filter(function (v, i) { return regs.indexOf(v) === i; });
+    var seen = {}, regs = [], nm = {};
+    $("regs").value.split(/\r?\n/).forEach(function (line) {
+      var t = line.trim(); if (!t) return;
+      var mt = t.match(/^([^\s,;|\t]+)[\s,;|\t]*(.*)$/); if (!mt) return;
+      var r = mt[1].toUpperCase(); if (seen[r]) return; seen[r] = 1; regs.push(r); nm[r] = mt[2].trim();
+    });
     if (!sp || !au || !ap) { $("msg").style.color = "var(--bad)"; $("msg").textContent = "Fill the student password, admin username and admin password."; return; }
     var salt = Array.prototype.map.call(crypto.getRandomValues(new Uint8Array(12)), function (x) { return ("0" + x.toString(16)).slice(-2); }).join("");
-    Promise.all([H(salt + "|p|" + sp), H(salt + "|u|" + au), H(salt + "|p|" + ap)].concat(regs.map(function (r) { return H(salt + "|u|" + r); }))).then(function (h) {
+    function enc(r, name) {
+      var e = new TextEncoder(), iv = crypto.getRandomValues(new Uint8Array(12));
+      return crypto.subtle.importKey("raw", e.encode(sp), "PBKDF2", false, ["deriveKey"]).then(function (k) {
+        return crypto.subtle.deriveKey({ name: "PBKDF2", salt: e.encode(salt + "|n|" + r), iterations: 100000, hash: "SHA-256" }, k, { name: "AES-GCM", length: 256 }, false, ["encrypt"]);
+      }).then(function (key) { return crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, key, e.encode(name)); }).then(function (ct) {
+        var all = new Uint8Array(12 + ct.byteLength); all.set(iv, 0); all.set(new Uint8Array(ct), 12);
+        var s = ""; for (var i = 0; i < all.length; i++) s += String.fromCharCode(all[i]); return btoa(s);
+      });
+    }
+    var named = regs.filter(function (r) { return nm[r]; });
+    Promise.all(named.map(function (r) { return enc(r, nm[r]); })).then(function (blobs) {
+      return Promise.all([H(salt + "|p|" + sp), H(salt + "|u|" + au), H(salt + "|p|" + ap)].concat(regs.map(function (r) { return H(salt + "|u|" + r); }))).then(function (h) { return [h, blobs]; });
+    }).then(function (res) {
+      var h = res[0], blobs = res[1], nmap = [];
+      named.forEach(function (r, i) { nmap.push("    \"" + h[3 + regs.indexOf(r)] + "\": \"" + blobs[i] + "\""); });
       var txt = "/* LOGIN LIST – created with manage.html. Do not edit by hand; regenerate it instead. */\n" +
         "window.AUTH = {\n  salt: \"" + salt + "\",\n  studentPass: \"" + h[0] + "\",\n  admin: { u: \"" + h[1] + "\", p: \"" + h[2] + "\" },\n  students: [\n" +
-        h.slice(3).map(function (x) { return "    \"" + x + "\""; }).join(",\n") + "\n  ]\n};\n";
+        h.slice(3).map(function (x) { return "    \"" + x + "\""; }).join(",\n") + "\n  ],\n  names: {\n" + nmap.join(",\n") + "\n  }\n};\n";
       $("out").value = txt;
       $("msg").style.color = "var(--ok)"; $("msg").textContent = "Done: " + regs.length + " student(s). Now copy the result into users.js.";
     });
