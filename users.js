@@ -6,15 +6,7 @@ window.AUTH = {
   students: [
   ]
 };
-/* LOGIN LIST – created with manage.html. Do not edit by hand; regenerate it instead. */
-window.AUTH = {
-  salt: "cba2342cb8da7fa49012ecfa",
-  studentPass: "cff6ed25c0fc0d56e54b13e84f99a793ca965577f30947f0b9177846dd46e892",
-  admin: { u: "8a6d1a239f7c724cc9c4c4dd2fcc1905143aee96693b13c2eb0e4225add04dda", p: "21abf1aa3689c86a0d292cfeb77c572e5fbfbc975ce0f446d7abd89e0c9da5f6" },
-  students: [
-    "48cd14a2c6f4bc0914a1382321e2bcd481f8738313d2469dfa40aefb52b9a271"
-  ]
-};
+
 /* LOGIN LIST – created with manage.html. Do not edit by hand; regenerate it instead. */
 window.AUTH = {
   salt: "c2068215f8172234169c7ffc",
@@ -49,5 +41,14 @@ window.AUTH = {
     "5c4fadf6df5e0c69e4b8eed7bea257303de604f075a9b75f956ea8d1197ac41d",
     "bcfad8c240adf6a30b295ccd28aa79a4c0b641e5062c5c3f558e85fcb5ace9c0",
     "24613eac06169337c28c8a2d433a319d4f4d88b6777084a1322764de79c06c41"
+  ]
+};
+/* LOGIN LIST – created with manage.html. Do not edit by hand; regenerate it instead. */
+window.AUTH = {
+  salt: "4c8ed635ee184d733b28b1e1",
+  studentPass: "73b829463c8003d1cfce04cb96712e8a6ebeb0d6e80cedee0f077405c1f5f0e2",
+  admin: { u: "71e06e094764090abf515067d792281e3146e7d1824d1735ef32fe579ee06e39", p: "f54c02d3a662fb280ec38d3f02e6e9e5029340cd0a8a52260bacf90aebef3277" },
+  students: [
+    "53efbb874f76934c9f3ae23c26f8172c0ac07a8bb55939c936d6f15be58bf6e0"
   ]
 };
