@@ -12,5 +12,7 @@ window.MANIFEST = [
   { id: "m2-5", group: "Module 2: Logical Reasoning", title: "2.5 Problems on Clocks", subtitle: "10 questions · Hand angles, coinciding and right angles" },
   { id: "m2-6", group: "Module 2: Logical Reasoning", title: "2.6 Number and Letter Series", subtitle: "10 questions · Find the pattern, then the next term" },
   { id: "m2-7", group: "Module 2: Logical Reasoning", title: "2.7 Seating Arrangement", subtitle: "10 questions · Rows, circles, left and right" },
-  { id: "m2-8", group: "Module 2: Logical Reasoning", title: "2.8 Ranking and Order", subtitle: "10 questions · Positions in a line, class or queue" }
+  { id: "m2-8", group: "Module 2: Logical Reasoning", title: "2.8 Ranking and Order", subtitle: "10 questions · Positions in a line, class or queue" },
+
+  { id: "m4", group: "Module 4: Digital Literacy", title: "MS Word, MS Excel & MS PowerPoint", subtitle: "15 questions · 4.1 Word · 4.2 Excel · 4.3 PowerPoint" }
 ];

@@ -62,7 +62,9 @@
       main.className = "wrap q s" + (secIndex(i + 1) % 5);
       var h = "<div class='sec'>" + esc(sectionOf(i + 1)) + "</div>";
       h += "<div class='qcard'><div class='qhead'><span class='qno'>Q" + (i + 1) + "</span><span class='of'>of " + N + "</span></div>";
-      if (P.toolbox) h += "<details class='toolbox'" + (i === 0 ? " open" : "") + "><summary>&#129520; Toolbox: remember these first</summary>" + tbl(P.toolbox) + "</details>";
+      var sec = null; for (var si = 0; si < (P.sections || []).length; si++) if (i + 1 >= P.sections[si].from && i + 1 <= P.sections[si].to) sec = P.sections[si];
+      var tb = (sec && sec.toolbox) || P.toolbox, tbOpen = sec && sec.toolbox ? (i + 1 === sec.from) : i === 0;
+      if (tb) h += "<details class='toolbox'" + (tbOpen ? " open" : "") + "><summary>&#129520; Toolbox: remember these first</summary>" + tbl(tb) + "</details>";
       if (q.note0) h += "<p class='dir'>" + q.note0 + "</p>";
       h += "<p class='qtext'>" + q.q + "</p>";
       if (q.data) h += tbl(q.data);
@@ -80,14 +82,17 @@
         h += "<div class='res " + (a === q.a ? "ok" : "bad") + "'>" + (a === q.a ? "✔ Correct!" : "✘ Not correct.") + " &nbsp;Answer: (" + LET[q.a] + ") " + esc(q.opts[q.a]) + "</div>";
         h += "<div class='sol'>";
         h += "<div class='box key'><span class='lab'>KEY IDEA</span><div>" + q.key + "</div></div>";
+        if (q.simg) q.simg.forEach(function (m) { h += "<div class='sfigw'><img class='sfig" + (m.leg ? " leg" : "") + (m.small ? " small" : "") + "' src='" + m.src + "' alt='Illustration' loading='lazy'></div>"; });
+        if (q.simg) h += "<div class='zoomhint'>&#128269; Tap a picture to zoom in</div>";
         if (P.diagrams && P.diagrams[i + 1] && window.DG) h += window.DG.render(P.diagrams[i + 1]);
         if (P.flows && P.flows[i + 1]) h += flowHtml(P.flows[i + 1]);
-        h += "<ol class='steps'>" + q.steps.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ol>";
+        h += "<ol class='steps'>" + q.steps.map(function (x) { return "<li><span class='st'>" + x + "</span></li>"; }).join("") + "</ol>";
         if (q.table) h += tbl(q.table);
         if (q.tip) h += "<div class='box tip'><span class='lab'>TIP</span><div>" + q.tip + "</div></div>";
         if (q.watch) h += "<div class='box watch'><span class='lab'>WATCH OUT</span><div>" + q.watch + "</div></div>";
         if (q.note) h += "<div class='box note'><span class='lab'>NOTE</span><div>" + q.note + "</div></div>";
         if (q.check) h += "<div class='box check'><span class='lab'>CHECK THIS</span><div>" + q.check + "</div></div>";
+        if (q.extra) h += (q.extraTitle ? "<h4 class='xtitle'>" + q.extraTitle + "</h4>" : "") + tbl(q.extra);
         h += "</div>";
       }
       h += "</div>";
@@ -119,6 +124,13 @@
     function closePal() { document.getElementById("pal").classList.remove("open"); }
 
     main.addEventListener("click", function (e) {
+      var im = e.target.closest ? e.target.closest("img.sfig") : null;
+      if (im) {
+        var ov = document.createElement("div"); ov.className = "lbox";
+        ov.innerHTML = "<button type='button' class='lclose'>&#10005; Close</button><div class='lin'><img src='" + im.getAttribute("src") + "'></div>";
+        ov.onclick = function () { ov.remove(); document.body.style.overflow = ""; };
+        document.body.appendChild(ov); document.body.style.overflow = "hidden"; return;
+      }
       var o = e.target.closest(".opt");
       if (o && !o.disabled) { st.ans[st.cur] = +o.getAttribute("data-k"); render(); var r = main.querySelector(".res"); if (r) r.scrollIntoView({ behavior: "smooth", block: "nearest" }); return; }
       if (e.target.id === "prev") go(st.cur - 1);

@@ -256,7 +256,63 @@
     return '<svg class="dg" viewBox="95 330 630 355" xmlns="http://www.w3.org/2000/svg">' + s + "</svg>";
   }
 
-  var R = { compass: compass, circles: circles, clockpair: clockpair, ring: ring, vopts: vopts, kab: kab, path: path, clock: clock, bars: bars, stack: stack, shape: shape, nest: nest, vsub: vsub, vwomen: vwomen, faces: faces, week: week, tree: tree };
+
+  function xl(d) {
+    var W = 380, nc = d.cols.length, nr = d.nrows, rh = 17, ch = 16, rw = 24, cw = (W - rw - 4) / nc, g0 = 108, s = "", cells = d.cells || {};
+    function addr(a) { var m = /^([A-Z]+)(\d+)$/.exec(a); return m ? [d.cols.indexOf(m[1]), +m[2] - 1] : [-1, -1]; }
+    function cx(c) { return rw + c * cw; } function cy(r) { return g0 + ch + r * rh; }
+    var H = g0 + ch + nr * rh + 10;
+    s += '<rect width="' + W + '" height="' + H + '" fill="#fff"/>';
+    s += '<rect width="' + W + '" height="20" fill="#217346"/>' + T(W / 2, 14, d.title || "Book1 - Excel", { s: 10, b: 1, c: "dg-w" }) + T(W - 8, 14, "–  \u25A1  \u2715", { s: 10, a: "end", c: "dg-w" });
+    s += '<rect y="20" width="' + W + '" height="20" fill="#f3f3f3"/>';
+    var tabs = ["File", "Home", "Insert", "Page Layout", "Formulas", "Data", "Review", "View"], x = 6, tab = d.tab || "Home";
+    tabs.forEach(function (t, i) {
+      var w = t.length * 5.6 + 12;
+      if (t === "File") s += '<rect x="' + x + '" y="21" width="' + w + '" height="19" fill="#217346"/>' + T(x + w / 2, 34, t, { s: 9.5, b: 1, c: "dg-w" });
+      else {
+        if (t === tab) s += '<rect x="' + x + '" y="21" width="' + w + '" height="19" fill="#fff" stroke="#d0d0d0"/><line x1="' + x + '" x2="' + (x + w) + '" y1="39" y2="39" stroke="#217346" stroke-width="2"/>';
+        if (t === d.hiTab) s += '<rect x="' + (x - 1) + '" y="20" width="' + (w + 2) + '" height="21" fill="none" stroke="#1e8a3c" stroke-width="2" stroke-dasharray="4 2"/>';
+        s += T(x + w / 2, 34, t, { s: 9.5, b: t === tab ? 1 : 0, c: "dg-xt" });
+      }
+      x += w + 2;
+    });
+    s += '<rect y="40" width="' + W + '" height="38" fill="#fff" stroke="#d6d6d6"/>';
+    var btn = [];
+    if (tab === "Data") btn = [["A\u2193Z", "Sort A to Z", 10], ["Z\u2193A", "Sort Z to A", 82], ["\u21C5", "Sort", 150], ["\u25BD", "Filter", 205]];
+    else if (tab === "Formulas") btn = [["fx", "Insert Function", 10], ["\u03A3", "AutoSum", 100]];
+    else btn = [["\u2398", "Paste", 10], ["B I U", "Font", 70], ["\u03A3", "AutoSum", 150], ["\u21C5", "Sort & Filter", 210]];
+    btn.forEach(function (b) {
+      var w = Math.max(54, b[1].length * 5.4 + 8), on = d.btn && d.btn === b[1];
+      s += T(b[2] + w / 2, 58, b[0], { s: 14, b: 1, c: "dg-xg" }) + T(b[2] + w / 2, 72, b[1], { s: 8.5, c: "dg-xt" });
+      if (on) s += '<rect x="' + (b[2] - 2) + '" y="43" width="' + (w + 4) + '" height="33" rx="3" fill="none" stroke="#1e8a3c" stroke-width="2" stroke-dasharray="4 2"/>';
+    });
+    s += '<rect x="4" y="82" width="62" height="18" fill="#fff" stroke="#bdbdbd"/>' + T(35, 95, d.name || "", { s: 10, b: 1, c: "dg-xt" });
+    s += T(78, 96, "fx", { s: 11, b: 1, c: "dg-xg" }) + '<rect x="92" y="82" width="' + (W - 96) + '" height="18" fill="#fff" stroke="#bdbdbd"/>' + T(98, 95, d.fx || "", { s: 10, a: "start", c: "dg-xt" });
+    s += '<rect x="0" y="' + g0 + '" width="' + W + '" height="' + ch + '" fill="#e6e6e6"/><rect x="0" y="' + g0 + '" width="' + rw + '" height="' + (ch + nr * rh) + '" fill="#e6e6e6"/>';
+    var hc = d.hdr || [], hr = d.rhdr || [];
+    d.cols.forEach(function (c, i) {
+      var on = hc.indexOf(c) >= 0;
+      if (on) s += '<rect x="' + cx(i) + '" y="' + g0 + '" width="' + cw + '" height="' + ch + '" fill="#cfe5d6"/><line x1="' + cx(i) + '" x2="' + (cx(i) + cw) + '" y1="' + (g0 + ch) + '" y2="' + (g0 + ch) + '" stroke="#217346" stroke-width="2"/>';
+      s += T(cx(i) + cw / 2, g0 + 12, c, { s: 10, b: on ? 1 : 0, c: "dg-xt" });
+    });
+    for (var r = 0; r < nr; r++) {
+      var on2 = hr.indexOf(r + 1) >= 0;
+      if (on2) s += '<rect x="0" y="' + cy(r) + '" width="' + rw + '" height="' + rh + '" fill="#cfe5d6"/><line x1="' + rw + '" x2="' + rw + '" y1="' + cy(r) + '" y2="' + (cy(r) + rh) + '" stroke="#217346" stroke-width="2"/>';
+      s += T(rw / 2, cy(r) + 12, r + 1, { s: 9.5, b: on2 ? 1 : 0, c: "dg-xt" });
+    }
+    if (d.range) { var p = d.range.split(":"), a = addr(p[0]), b = addr(p[1]); s += '<rect x="' + cx(a[0]) + '" y="' + cy(a[1]) + '" width="' + (cx(b[0] + 1) - cx(a[0])) + '" height="' + (cy(b[1] + 1) - cy(a[1])) + '" fill="#dcebe2"/>'; }
+    (d.hi || []).forEach(function (h) { var a = addr(h); s += '<rect x="' + cx(a[0]) + '" y="' + cy(a[1]) + '" width="' + cw + '" height="' + rh + '" fill="#fff0a0"/>'; });
+    for (var c2 = 0; c2 <= nc; c2++) s += '<line x1="' + cx(c2) + '" x2="' + cx(c2) + '" y1="' + g0 + '" y2="' + (g0 + ch + nr * rh) + '" stroke="#d4d4d4"/>';
+    for (var r2 = 0; r2 <= nr; r2++) s += '<line x1="0" x2="' + W + '" y1="' + cy(r2 - 1 + 0) + '" y2="' + cy(r2 - 1 + 0) + '" stroke="#d4d4d4"/>';
+    Object.keys(cells).forEach(function (k) {
+      var a = addr(k), v = String(cells[k]), num = /^-?[\d.,]+$/.test(v);
+      s += T(num ? cx(a[0] + 1) - 5 : cx(a[0]) + 5, cy(a[1]) + 12, v, { s: 10.5, a: num ? "end" : "start", c: "dg-xt" });
+    });
+    if (d.sel) { var q = addr(d.sel); s += '<rect x="' + cx(q[0]) + '" y="' + cy(q[1]) + '" width="' + cw + '" height="' + rh + '" fill="none" stroke="#217346" stroke-width="2.4"/><rect x="' + (cx(q[0] + 1) - 3) + '" y="' + (cy(q[1] + 1) - 3) + '" width="6" height="6" fill="#217346"/>'; }
+    return svg(W, H, s);
+  }
+
+  var R = { xl: xl, compass: compass, circles: circles, clockpair: clockpair, ring: ring, vopts: vopts, kab: kab, path: path, clock: clock, bars: bars, stack: stack, shape: shape, nest: nest, vsub: vsub, vwomen: vwomen, faces: faces, week: week, tree: tree };
   window.DG = {
     render: function (d) {
       var f = R[d.t]; if (!f) return "";
