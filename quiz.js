@@ -61,7 +61,7 @@
       var i = st.cur, q = Q[i], a = st.ans[i], answered = a !== undefined;
       main.className = "wrap q s" + (secIndex(i + 1) % 5);
       var h = "<div class='sec'>" + esc(sectionOf(i + 1)) + "</div>";
-      h += "<div class='qcard'><div class='qhead'><span class='qno'>Q" + (i + 1) + "</span><span class='of'>of " + N + "</span></div>";
+      h += "<div class='qcard'><div class='qhead'><span class='qno'>" + (q.label || ("Q" + (i + 1))) + "</span><span class='of'>of " + N + "</span></div>";
       var sec = null; for (var si = 0; si < (P.sections || []).length; si++) if (i + 1 >= P.sections[si].from && i + 1 <= P.sections[si].to) sec = P.sections[si];
       var tb = (sec && sec.toolbox) || P.toolbox, tbOpen = sec && sec.toolbox ? (i + 1 === sec.from) : i === 0;
       if (tb) h += "<details class='toolbox'" + (tbOpen ? " open" : "") + "><summary>&#129520; Toolbox: remember these first</summary>" + tbl(tb) + "</details>";
