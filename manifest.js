@@ -5,6 +5,16 @@ window.MANIFEST = [
   { id: "paper1", title: "Employability Skills – Model Paper 1", subtitle: "Section A · 65 questions · Aptitude, Reasoning, Data, Computer" },
   { id: "paper2", title: "Employability Skills – Model Paper 2", subtitle: "Section A · 65 questions · Aptitude, Reasoning, Data, Computer" },
 
+  { id: "m1-1", group: "Module 1: Quantitative Aptitude", title: "1.1 Percentages, Profit and Loss, Discount", subtitle: "15 questions · Money, markups and discounts" },
+  { id: "m1-2", group: "Module 1: Quantitative Aptitude", title: "1.2 Partnership", subtitle: "10 questions · Share the profit fairly" },
+  { id: "m1-3", group: "Module 1: Quantitative Aptitude", title: "1.3 Time, Speed and Distance", subtitle: "10 questions · Trains, boats and unit conversion" },
+  { id: "m1-4", group: "Module 1: Quantitative Aptitude", title: "1.4 Simple and Compound Interest", subtitle: "10 questions · Interest on money" },
+  { id: "m1-5", group: "Module 1: Quantitative Aptitude", title: "1.5 Ratio, Proportion and Averages", subtitle: "10 questions · Comparing quantities and finding averages" },
+  { id: "m1-6", group: "Module 1: Quantitative Aptitude", title: "1.6 Problems on Ages", subtitle: "10 questions · Past, present and future ages" },
+  { id: "m1-7", group: "Module 1: Quantitative Aptitude", title: "1.7 Permutations and Combinations", subtitle: "10 questions · Counting arrangements and selections" },
+  { id: "m1-8", group: "Module 1: Quantitative Aptitude", title: "1.8 Probability", subtitle: "10 questions · Chance of an event" },
+  { id: "m1-9", group: "Module 1: Quantitative Aptitude", title: "1.9 Mensuration", subtitle: "10 questions · Length, perimeter and area of shapes" },
+
   { id: "m2-1", group: "Module 2: Logical Reasoning", title: "2.1 Coding-Decoding", subtitle: "10 questions · Letter shifts, positions, digits and words" },
   { id: "m2-2", group: "Module 2: Logical Reasoning", title: "2.2 Direction Sense Test", subtitle: "10 questions · Paths, turns, rotation and shadows" },
   { id: "m2-3", group: "Module 2: Logical Reasoning", title: "2.3 Blood Relations", subtitle: "10 questions · Family trees, symbols and sentences" },

@@ -22,7 +22,7 @@
     document.getElementById("ptitle").textContent = P.title;
 
     function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
-    function esc(t) { var d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+    function esc(t) { var d = document.createElement("div"); d.textContent = t; return d.innerHTML.replace(/&lt;(\/?)sup&gt;/g, "<$1sup>"); }
     function secIndex(n) {
       for (var i = 0; i < (P.sections || []).length; i++) if (n >= P.sections[i].from && n <= P.sections[i].to) return i;
       return 0;
@@ -86,6 +86,8 @@
         if (q.simg) h += "<div class='zoomhint'>&#128269; Tap a picture to zoom in</div>";
         if (P.diagrams && P.diagrams[i + 1] && window.DG) h += window.DG.render(P.diagrams[i + 1]);
         if (P.flows && P.flows[i + 1]) h += flowHtml(P.flows[i + 1]);
+        if (q.flow) h += flowHtml(q.flow);
+        if (q.tpre) q.tpre.forEach(function (t) { h += tbl(t); });
         h += "<ol class='steps'>" + q.steps.map(function (x) { return "<li><span class='st'>" + x + "</span></li>"; }).join("") + "</ol>";
         if (q.table) h += tbl(q.table);
         if (q.tip) h += "<div class='box tip'><span class='lab'>TIP</span><div>" + q.tip + "</div></div>";
