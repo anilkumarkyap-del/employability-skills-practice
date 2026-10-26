@@ -66,3 +66,17 @@ window.AUTH = {
     "60b7117a71943e13356faa5622daa873004fd3253c38db15a76029a8e7ceca85": "GlCChlfAFYEUUHTOitKcb7QzYbR6U8VKxRxFVmrtsYmvFg=="
   }
 };
+/* LOGIN LIST – created with manage.html. Do not edit by hand; regenerate it instead. */
+window.AUTH = {
+  salt: "2835e2c07b8d5521ea30588f",
+  studentPass: "9c8d0bf14e3ea6a02d0316253f5b75f1e68d98ae626907c4afee286bfb3a767c",
+  admin: { u: "ee744815d4f32f679b5f6564bc375b876da1ebe071fd35f65cab66c95754e93e", p: "2b1e96f871159da579faebab53c66e89ddc490df8dd4c8f87e37a1b5da176a8a" },
+  students: [
+    "e8dff13cc321262bbd76e8eac29f46757c6938894c67f2236e9b1424a86eabae",
+    "ffb72289bad1ebd1accc2fa63b908e0d2ba841af344b325984aeef5582341a0b"
+  ],
+  names: {
+    "e8dff13cc321262bbd76e8eac29f46757c6938894c67f2236e9b1424a86eabae": "wEy4c/JaXmlS4N8jaHxHCSv8DjmhGkMMS49Eq2dyuhlmBptK",
+    "ffb72289bad1ebd1accc2fa63b908e0d2ba841af344b325984aeef5582341a0b": "mf+PUKNIhrrQar3gCPBb+BIMMij9fC6PvENl6IxASqByHv9C"
+  }
+};
