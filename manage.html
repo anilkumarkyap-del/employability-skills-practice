@@ -22,7 +22,23 @@
 <body>
 <header class="top"><div class="inner"><a class="back" href="index.html">&larr; Home</a><h1>Manage students (Admin)</h1></div></header>
 <main class="wrap mg">
-  <div class="qcard" style="padding:18px">
+  <div class="qcard" style="padding:18px;margin-bottom:16px">
+    <h2 style="margin-top:0">Add new students (keeps everyone already in users.js)</h2>
+    <p class="hint">Use this when you only want to add new students or names. You do <b>not</b> need to type the old students again. The page reads the current users.js, adds the new lines to it, and gives you the full updated file.</p>
+    <label for="asp">Student password (the one students use to log in)</label>
+    <input id="asp" placeholder="e.g. ES@2026BARKUR">
+    <label for="aregs">New students: register number and name (one per line)</label>
+    <textarea id="aregs" placeholder="U05RN24C0101 Name One&#10;U05RN24C0102 | Name Two"></textarea>
+    <p class="hint">If a register number is already in the list, its login stays the same and the name you type here is saved (so you can also use this to add or correct a name).</p>
+    <div class="acts"><button class="btn primary" id="agen" type="button">Add and generate users.js</button></div>
+    <div id="amsg" style="font-weight:600;margin-top:10px"></div>
+    <label for="aout">Result (copy all of this)</label>
+    <textarea id="aout" readonly></textarea>
+    <div class="acts"><button class="btn" id="acopy" type="button">Copy</button><button class="btn" id="adl" type="button">Download users.js</button></div>
+    <p class="hint">Then on GitHub: open <b>users.js</b> &rarr; pencil icon &rarr; select all, delete, paste &rarr; Commit changes. Wait a minute and refresh. Students already logged in are not affected.</p>
+  </div>
+  <details class="qcard" style="padding:14px 18px"><summary style="font-weight:700;cursor:pointer">Start again from scratch (rebuild the whole list)</summary>
+  <div style="padding-top:8px">
     <h2 style="margin-top:0">Create the login list</h2>
     <p class="hint">Type everything here, press Generate, then copy the result into <b>users.js</b> on GitHub. Passwords, register numbers and names are stored only as scrambled codes, so nobody can read them in your repository.</p>
 
@@ -56,7 +72,7 @@
       <li>Wait a minute. New students can log in; removed students cannot.</li>
     </ol>
     <p class="hint">Tip: keep your register-number list saved somewhere safe. This page cannot show old numbers back, because they are stored only as codes.</p>
-  </div>
+  </div></details>
 </main>
 <script>
 (function () {
@@ -100,6 +116,62 @@
   };
   $("dl").onclick = function () {
     var o = $("out").value; if (!o) return;
+    var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([o], { type: "text/javascript" })); a.download = "users.js"; a.click();
+  };
+})();
+</script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  function H(s) { return window.ESAuth.H(s); }
+  function msg(t, ok) { $("amsg").style.color = ok ? "var(--ok)" : "var(--bad)"; $("amsg").textContent = t; }
+  $("agen").onclick = function () {
+    var A = window.AUTH, sp = $("asp").value;
+    if (!A || !A.salt) { msg("users.js was not found.", false); return; }
+    if (!sp) { msg("Type the student password.", false); return; }
+    var seen = {}, regs = [], nm = {};
+    $("aregs").value.split(/\r?\n/).forEach(function (line) {
+      var t = line.trim(); if (!t) return;
+      var mt = t.match(/^([^\s,;|\t]+)[\s,;|\t]*(.*)$/); if (!mt) return;
+      var r = mt[1].toUpperCase(); if (seen[r]) return; seen[r] = 1; regs.push(r); nm[r] = mt[2].trim();
+    });
+    if (!regs.length) { msg("Type at least one student.", false); return; }
+    var salt = A.salt;
+    H(salt + "|p|" + sp).then(function (hp) {
+      if (hp !== A.studentPass) { throw new Error("That is not the current student password. Use the same one students log in with."); }
+      return Promise.all(regs.map(function (r) { return H(salt + "|u|" + r); }));
+    }).then(function (hs) {
+      var e = new TextEncoder();
+      var named = regs.map(function (r, i) { return i; }).filter(function (i) { return nm[regs[i]]; });
+      return Promise.all(named.map(function (i) {
+        var r = regs[i], iv = crypto.getRandomValues(new Uint8Array(12));
+        return crypto.subtle.importKey("raw", e.encode(sp), "PBKDF2", false, ["deriveKey"]).then(function (k) {
+          return crypto.subtle.deriveKey({ name: "PBKDF2", salt: e.encode(salt + "|n|" + r), iterations: 100000, hash: "SHA-256" }, k, { name: "AES-GCM", length: 256 }, false, ["encrypt"]);
+        }).then(function (key) { return crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, key, e.encode(nm[r])); }).then(function (ct) {
+          var all = new Uint8Array(12 + ct.byteLength); all.set(iv, 0); all.set(new Uint8Array(ct), 12);
+          var s = ""; for (var j = 0; j < all.length; j++) s += String.fromCharCode(all[j]); return [hs[i], btoa(s)];
+        });
+      })).then(function (pairs) { return [hs, pairs]; });
+    }).then(function (res) {
+      var hs = res[0], pairs = res[1];
+      var stu = (A.students || []).slice(), added = 0;
+      hs.forEach(function (h) { if (stu.indexOf(h) < 0) { stu.push(h); added++; } });
+      var names = {}; Object.keys(A.names || {}).forEach(function (k) { names[k] = A.names[k]; });
+      pairs.forEach(function (p) { names[p[0]] = p[1]; });
+      var nl = Object.keys(names).map(function (k) { return "    \"" + k + "\": \"" + names[k] + "\""; });
+      var txt = "/* LOGIN LIST – created with manage.html. Do not edit by hand; regenerate it instead. */\n" +
+        "window.AUTH = {\n  salt: \"" + salt + "\",\n  studentPass: \"" + A.studentPass + "\",\n  admin: { u: \"" + A.admin.u + "\", p: \"" + A.admin.p + "\" },\n  students: [\n" +
+        stu.map(function (x) { return "    \"" + x + "\""; }).join(",\n") + "\n  ],\n  names: {\n" + nl.join(",\n") + "\n  }\n};\n";
+      $("aout").value = txt;
+      msg("Done: " + added + " new student(s) added, " + pairs.length + " name(s) saved. Total students now: " + stu.length + ". Copy the result into users.js.", true);
+    }).catch(function (err) { msg(err.message || "Something went wrong.", false); });
+  };
+  $("acopy").onclick = function () {
+    var o = $("aout"); if (!o.value) return; o.select();
+    (navigator.clipboard ? navigator.clipboard.writeText(o.value) : Promise.resolve(document.execCommand("copy"))).then(function () { msg("Copied.", true); });
+  };
+  $("adl").onclick = function () {
+    var o = $("aout").value; if (!o) return;
     var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([o], { type: "text/javascript" })); a.download = "users.js"; a.click();
   };
 })();
