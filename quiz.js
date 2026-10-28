@@ -2,7 +2,7 @@
   var params = new URLSearchParams(location.search);
   var id = (params.get("p") || "").replace(/[^a-z0-9_-]/gi, "");
   var main = document.getElementById("main");
-  var LET = ["A", "B", "C", "D"];
+  var LET = ["A", "B", "C", "D", "E"];
 
   if (!id) { main.innerHTML = "<p>No paper selected. <a href='index.html'>Go back</a>.</p>"; return; }
 

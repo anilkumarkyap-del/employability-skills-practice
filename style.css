@@ -187,3 +187,4 @@ body{overscroll-behavior-y:none}
 .steps li .st{flex:1;min-width:0}
 .zoomhint{margin:2px 12px 8px;font-size:.78rem;color:var(--mut);text-align:center}
 .dgwrap .dg-xt{fill:#222}.dgwrap .dg-xg{fill:#217346}
+.qcard>img.fig{max-width:calc(100% - 32px)}

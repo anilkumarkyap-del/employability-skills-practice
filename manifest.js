@@ -5,6 +5,8 @@ window.MANIFEST = [
   { id: "paper1", title: "Employability Skills – Model Paper 1", subtitle: "Section A · 65 questions · Aptitude, Reasoning, Data, Computer" },
   { id: "paper2", title: "Employability Skills – Model Paper 2", subtitle: "Section A · 65 questions · Aptitude, Reasoning, Data, Computer" },
 
+  { id: "ia-set2", group: "Internal Assessment (IA) Practice", title: "IA Practice Paper - Set 2", subtitle: "60 questions · Percentages, Profit, Partnership, Trains, Boats, Venn, Syllogisms, DI, Images, Analogy" },
+
   { id: "m1-1", group: "Module 1: Quantitative Aptitude", title: "1.1 Percentages, Profit and Loss, Discount", subtitle: "15 questions · Money, markups and discounts" },
   { id: "m1-2", group: "Module 1: Quantitative Aptitude", title: "1.2 Partnership", subtitle: "10 questions · Share the profit fairly" },
   { id: "m1-3", group: "Module 1: Quantitative Aptitude", title: "1.3 Time, Speed and Distance", subtitle: "10 questions · Trains, boats and unit conversion" },
