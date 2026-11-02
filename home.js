@@ -10,6 +10,20 @@
       list.appendChild(h);
     }
     lastGroup = p.group || null;
+    if (p.kind === "notes") {
+      var rd = 0;
+      try { var ns = JSON.parse(localStorage.getItem("notes:" + (window.ES_USER || "") + ":" + p.notesId) || "null"); if (ns && ns.read) rd = Object.keys(ns.read).length; } catch (e) {}
+      var na = document.createElement("a");
+      na.className = "card";
+      na.href = p.href;
+      na.innerHTML = "<h2></h2><p></p><span class='badge'></span>";
+      na.querySelector("h2").textContent = p.title;
+      na.querySelector("p").textContent = p.subtitle || "";
+      na.querySelector(".badge").textContent = rd ? rd + " of 7 units read – continue" : "Read notes";
+      na.querySelector(".badge").style.background = "var(--key)";
+      list.appendChild(na);
+      return;
+    }
     var saved = null;
     try { saved = JSON.parse(localStorage.getItem("practice:" + (window.ES_USER || "") + ":" + p.id) || "null"); } catch (e) {}
     var done = saved && saved.ans ? Object.keys(saved.ans).length : 0;

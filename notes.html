@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Notes</title>
+<link rel="stylesheet" href="style.css">
+<script src="users.js"></script>
+<script src="auth.js"></script>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#1d4ed8"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><script>if("serviceWorker"in navigator)addEventListener("load",function(){navigator.serviceWorker.register("sw.js")})</script>
+</head>
+<body>
+<header class="top">
+  <div class="inner">
+    <a class="back" href="index.html">&larr; Home</a>
+    <h1 id="ntitle">Notes</h1>
+    <button id="fsz" class="ghost" type="button" title="Change text size">A+</button>
+  </div>
+</header>
+<main class="wrap nt" id="nt">
+  <div class="nt-prog"><div class="nt-bar"><i id="ntbar"></i></div><span id="ntcount"></span></div>
+  <input id="ntsearch" class="nt-search" type="search" placeholder="Search these notes (e.g. phishing, resume, OTP)" autocomplete="off">
+  <div id="ntres" class="nt-res" hidden></div>
+  <nav id="nttabs" class="nt-tabs" aria-label="Units"></nav>
+  <div id="ntbody"></div>
+</main>
+<script src="notes-fs.js"></script>
+<script src="notes.js"></script>
+</body>
+</html>

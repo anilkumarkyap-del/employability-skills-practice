@@ -5,6 +5,8 @@ window.MANIFEST = [
   { id: "paper1", title: "Employability Skills – Model Paper 1", subtitle: "Section A · 65 questions · Aptitude, Reasoning, Data, Computer" },
   { id: "paper2", title: "Employability Skills – Model Paper 2", subtitle: "Section A · 65 questions · Aptitude, Reasoning, Data, Computer" },
 
+  { id: "fs-notes", kind: "notes", notesId: "fs", href: "notes.html?n=fs", group: "Finishing School Techniques", title: "Theory Notes: Finishing School Techniques", subtitle: "7 units · Internet, online safety, email, covering letters, resume, group discussion, interviews" },
+
   { id: "ia-set2", group: "Internal Assessment (IA) Practice", title: "IA Practice Paper - Set 2", subtitle: "60 questions · Percentages, Profit, Partnership, Trains, Boats, Venn, Syllogisms, DI, Images, Analogy" },
 
   { id: "m1-1", group: "Module 1: Quantitative Aptitude", title: "1.1 Percentages, Profit and Loss, Discount", subtitle: "15 questions · Money, markups and discounts" },
