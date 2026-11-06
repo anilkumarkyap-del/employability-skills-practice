@@ -126,16 +126,31 @@
       var h = "";
       l.forEach(function (a) {
         h += "<div class='qcard as-item'><h3>" + esc(a.title) + "</h3><p class='hint'>" + a.n + " questions · " + (a.active ? "<b class='okc'>Open</b>" : "<b class='badc'>Closed</b>") + " · " + a.submissions + (roster.length ? " of " + roster.length : "") + " submitted" + (a.due ? "<br>Due: " + ASM.fmtDate(a.due) : "") + "</p>" +
-          "<div class='as-btns'><button class='btn primary' data-a='res' data-id='" + a.id + "'>Results</button><button class='btn' data-a='tog' data-id='" + a.id + "' data-v='" + (a.active ? 0 : 1) + "'>" + (a.active ? "Close" : "Re-open") + "</button><button class='btn' data-a='del' data-id='" + a.id + "'>Delete</button></div></div>";
+          "<div class='as-btns'><button class='btn primary' data-a='res' data-id='" + a.id + "'>Results</button><button class='btn' data-a='tog' data-id='" + a.id + "' data-v='" + (a.active ? 0 : 1) + "'>" + (a.active ? "Close" : "Re-open") + "</button><button class='btn' data-a='due' data-id='" + a.id + "' data-d='" + esc(a.due || "") + "'>Change due date</button><button class='btn' data-a='del' data-id='" + a.id + "'>Delete</button></div><div class='as-duebox' id='db-" + a.id + "'></div></div>";
       });
       p.innerHTML = h;
       p.onclick = function (e) {
         var b = e.target.closest("button[data-a]"); if (!b) return; var id = b.dataset.id;
         if (b.dataset.a === "res") resultsPane(id);
+        else if (b.dataset.a === "due") dueForm(id, b.dataset.d);
+        else if (b.dataset.a === "save" || b.dataset.a === "clr") {
+          var v = b.dataset.a === "clr" ? "" : document.getElementById("dv-" + id).value;
+          if (b.dataset.a === "save" && !v) { alert("Choose a date and time first."); return; }
+          b.disabled = true;
+          call({ action: "setdue", id: id, due: v ? new Date(v).toISOString() : "" }).then(function (r) { if (r.ok) managePane(); else { alert(r.error || "Failed. If you just updated Code.gs, redeploy it as a New version."); b.disabled = false; } }).catch(function () { alert("Could not reach the server."); b.disabled = false; });
+        }
         else if (b.dataset.a === "tog") call({ action: "setactive", id: id, active: b.dataset.v === "1" }).then(managePane);
         else if (b.dataset.a === "del") { if (confirm("Delete this assignment AND all its results? This cannot be undone.")) call({ action: "remove", id: id }).then(managePane); }
       };
     }).catch(function () { p.innerHTML = "<div class='as-msg'>Could not load. Check internet / teacher key.</div>"; });
+  }
+
+  function dueForm(id, cur) {
+    var box = document.getElementById("db-" + id); if (!box) return;
+    if (box.innerHTML) { box.innerHTML = ""; return; }
+    var val = "";
+    if (cur) { var d = new Date(cur); if (!isNaN(d)) { var z = new Date(d.getTime() - d.getTimezoneOffset() * 60000); val = z.toISOString().slice(0, 16); } }
+    box.innerHTML = "<label>New due date &amp; time</label><input type='datetime-local' id='dv-" + id + "' value='" + val + "'><div class='as-btns'><button class='btn primary' data-a='save' data-id='" + id + "'>Save</button><button class='btn' data-a='clr' data-id='" + id + "'>Remove due date</button></div><p class='hint'>If you are extending a deadline that has already passed, also tap <b>Re-open</b> if the assignment shows Closed.</p>";
   }
 
   /* ---------- RESULTS ---------- */

@@ -274,3 +274,5 @@ body{overscroll-behavior-y:none}
 .as .as-form input,.as .as-form textarea{background:var(--card);color:var(--ink)}
 .as .tw td,.as .tw th{padding:6px 7px;font-size:.85rem}
 .as .qcard .tw{margin:8px 0}
+
+.as .as-duebox{margin-top:10px}.as .as-duebox label{display:block;font-weight:600;margin-bottom:4px}.as .as-duebox input{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;background:var(--card);color:var(--ink)}
