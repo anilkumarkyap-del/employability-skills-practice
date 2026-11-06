@@ -10,6 +10,18 @@
       list.appendChild(h);
     }
     lastGroup = p.group || null;
+    if (p.kind === "link") {
+      var role = ""; try { role = (JSON.parse(sessionStorage.getItem("es_session") || "{}") || {}).r || ""; } catch (e) {}
+      if ((p.adminOnly && role !== "admin") || (p.studentOnly && role === "admin")) { if (list.lastChild && list.lastChild.className === "grp" && !(p.group && (window.MANIFEST||[]).some(function (z) { return z !== p && z.group === p.group && !((z.adminOnly && role !== "admin") || (z.studentOnly && role === "admin")); }))) list.removeChild(list.lastChild); return; }
+      var la = document.createElement("a");
+      la.className = "card"; la.href = p.href;
+      la.innerHTML = "<h2></h2><p></p><span class='badge'></span>";
+      la.querySelector("h2").textContent = p.title; la.querySelector("p").textContent = p.subtitle || "";
+      la.querySelector(".badge").textContent = "Open";
+      la.querySelector(".badge").style.background = "var(--key)";
+      list.appendChild(la);
+      return;
+    }
     if (p.kind === "notes") {
       var rd = 0;
       try { var ns = JSON.parse(localStorage.getItem("notes:" + (window.ES_USER || "") + ":" + p.notesId) || "null"); if (ns && ns.read) rd = Object.keys(ns.read).length; } catch (e) {}

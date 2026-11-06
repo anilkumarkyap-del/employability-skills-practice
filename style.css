@@ -238,3 +238,39 @@ body{overscroll-behavior-y:none}
 .nt-read input{width:20px;height:20px;accent-color:var(--ok)}
 .nt-nav{display:flex;gap:10px}.nt-nav .btn{flex:1}
 .nt-quiz{display:block;margin-top:12px;text-align:center;padding:12px;border-radius:12px;background:var(--key);color:#fff;text-decoration:none;font-weight:600}
+
+/* ===== Assignments ===== */
+.as .as-msg{background:var(--card);border:1px solid var(--line,var(--line));border-radius:14px;padding:18px;margin:16px;text-align:center;line-height:1.5}
+.as .as-form{padding:14px 16px}
+.as .as-form label{display:block;margin:10px 0 4px;font-weight:600}
+.as .as-form label.chk{font-weight:400;display:flex;gap:8px;align-items:flex-start}
+.as .as-form label.chk.sub{margin-left:30px}
+.as .as-form input[type=text],.as .as-form input[type=password],.as .as-form input[type=number],.as .as-form input[type=datetime-local],.as .as-form textarea{width:100%;box-sizing:border-box;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit}
+.as .as-form button{margin-top:12px}
+.as .grp2{margin:14px 0 4px;font-size:15px;color:var(--pri)}
+.as details.bk{border-bottom:1px solid var(--line);padding:6px 0}
+.as details.bk summary{cursor:pointer}
+.as .as-tabs{display:flex;gap:6px;margin:12px 16px;flex-wrap:wrap}
+.as .as-tabs button{flex:1;padding:10px 8px;border:1px solid var(--line);background:var(--card);border-radius:10px;font:inherit;font-weight:600}
+.as .as-tabs button.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+.as .as-pl{padding-left:22px;margin:8px 0}
+.as .as-pl li{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}
+.as .as-pl .x{margin:0;border:0;background:var(--badbg);color:var(--bad);border-radius:8px;width:34px;height:34px;flex:none}
+.as .as-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.as .as-item h3{margin:0 0 4px}
+.as .as-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;margin:10px 0}
+.as .as-stats div{background:var(--okbg);border-radius:10px;padding:8px;text-align:center;font-size:12px}
+.as .as-stats b{display:block;font-size:20px;color:var(--pri)}
+.as tr.abs td{color:var(--bad);background:var(--badbg)}
+.as .okc{color:var(--ok)}.as .badc{color:var(--bad)}
+.as .opt.sel{border-color:var(--pri);background:var(--okbg)}
+.palgrid .pn.ans{background:var(--okbg);border-color:var(--pri)}
+.legend i.ans{background:var(--okbg);border:1px solid var(--pri)}
+.card.done .badge{background:var(--ok)}.card.late{opacity:.6}
+.as .qcard.as-item,.as>.btn{margin-left:16px;margin-right:16px}
+
+.as th{background:var(--key);color:#fff}
+.as .as-tabs button{color:var(--ink)}
+.as .as-form input,.as .as-form textarea{background:var(--card);color:var(--ink)}
+.as .tw td,.as .tw th{padding:6px 7px;font-size:.85rem}
+.as .qcard .tw{margin:8px 0}

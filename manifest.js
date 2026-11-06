@@ -2,6 +2,9 @@
    To add a new paper: upload its file and add ONE line here.
    Optional "group" puts several items under one heading (used for Module 2). */
 window.MANIFEST = [
+  { id: "asg", kind: "link", group: "Assignments", href: "assignments.html", title: "My Assignments", subtitle: "Assignments given by your teacher · 1 mark per question", studentOnly: true },
+  { id: "asg-admin", kind: "link", group: "Assignments", href: "assign-admin.html", title: "Assignment Manager (Teacher)", subtitle: "Create assignments from the question bank, see results, download Excel / PDF", adminOnly: true },
+
   { id: "paper1", title: "Employability Skills – Model Paper 1", subtitle: "Section A · 65 questions · Aptitude, Reasoning, Data, Computer" },
   { id: "paper2", title: "Employability Skills – Model Paper 2", subtitle: "Section A · 65 questions · Aptitude, Reasoning, Data, Computer" },
 
